@@ -87,10 +87,6 @@ function nvidia-settings
     command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
 end
 
-if [[ "$PWD" == "$HOME" ]]; then
-    cd ~/Github
-fi
-
 function mkcd() {
     mkdir -p "$1" && cd "$1"
 }
@@ -192,9 +188,9 @@ if status is-interactive
 
 end
 
-if [[ "$PWD" == "$HOME" ]]; then
+if test "$PWD" = "$HOME"
     cd ~/Github
-fi
+end
 
 #####################################
 ##==> Shell Customization
