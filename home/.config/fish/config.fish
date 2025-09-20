@@ -190,6 +190,7 @@ if status is-interactive
 end
 
 if test "$PWD" = "$HOME"
+    fastfetch
     cd ~/Github
 end
 
@@ -208,6 +209,3 @@ pyenv init - | source
 #####################################
 ##==> Fun Stuff
 #####################################
-if test "$PWD" = "$HOME"
-    fastfetch
-end
