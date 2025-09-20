@@ -208,4 +208,6 @@ pyenv init - | source
 #####################################
 ##==> Fun Stuff
 #####################################
-fastfetch
+if test "$PWD" = "$HOME"
+    fastfetch
+end
