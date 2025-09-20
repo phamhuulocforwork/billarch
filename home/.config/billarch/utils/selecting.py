@@ -48,8 +48,8 @@ class Selector:
 	def _generate_rofi_list(cls, elements: Dict[str, Path], cache_dir: Path, random_el_text: str) -> list[str]:
 		"""
 		args:
-			elements: Словарь, в котором ключ - заголовок, а значение - путь к иконке.
-			cache_dir: Path - Путь до папки, в которую будут кэшироваться изображения
+			elements: Dictionary where key is title and value is path to icon.
+			cache_dir: Path - Path to the folder where images will be cached
 		"""
 
 		cache_dir.mkdir(parents=True, exist_ok=True)

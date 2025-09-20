@@ -43,19 +43,19 @@ def setting_args(parser: ArgumentParser):
 if __name__ == '__main__':
 	logging.info("========================================== PROGRAM STARTED ==========================================")
 
-	##==> Настройка принимаемых аргументов
+	##==> Setting up accepted arguments
 	###############################################
 	parser = ArgumentParser(description='Transform your meowch beyond recognition!', formatter_class=RawTextHelpFormatter)
 	setting_args(parser)
 	args = parser.parse_args()
 	logging.debug(f"Passed arguments: {args}")
 
-	##==> Инициализируем менеджер тем
+	##==> Initialize theme manager
 	###############################################
-	if args.action != "get": # Для ускорения обработки get запросов
+	if args.action != "get": # For speeding up get request processing
 		theme_manager = ThemeManager()
 
-	##==> Обработка действий пользователя
+	##==> Processing user actions
 	###############################################
 	if args.action == "get":
 		if args.parameter == "current-wallpaper":

@@ -11,10 +11,10 @@ from utils.options import (
 from vars import HOME, BILLARCH_DIR, GTK2_CFG, GTK3_CFG, GTK4_CFG	
 
 
-##==> Настройки применения тем для конфигураций
+##==> Settings for applying themes to configurations
 ###################################################
 theme_options: List[BaseOption] = [
-	##==> Копирование конфигов
+	##==> Copying configs
 	###############################################
 	CopyOption(_id="polybar", name="polybar.ini", path_to=HOME / ".config" / "polybar" / "config.ini", wayland_needed=False),
 	CopyOption(_id="picom", name="picom.conf", path_to=HOME / ".config" / "bspwm" / "picom.conf", wayland_needed=False),
@@ -27,7 +27,7 @@ theme_options: List[BaseOption] = [
 	CopyOption(_id="waybar_css", name="waybar.css", path_to=HOME / ".config" / "waybar" / "style.css", xorg_needed=False),
 
 
-	##==> Копирование / Генерация конфигов
+	##==> Copying / Generating configs
 	###############################################
 	CopyOrGenOption(
 		_id="alacritty",
@@ -48,7 +48,7 @@ theme_options: List[BaseOption] = [
 		template_name="qt6ct-colors.mustache"
 	),
 
-	##==> Кастомные действия 
+	##==> Custom actions
 	###############################################
 	DunstOption(
 		_id="dunst", 
@@ -96,7 +96,7 @@ theme_options: List[BaseOption] = [
 	)
 ]
 
-##==> Логирование
+##==> Logging
 ###############################################
 log_file = BILLARCH_DIR / "logs.log"
 
@@ -109,7 +109,7 @@ logging.basicConfig(
 			mode='a',
 			maxBytes=5 * 1024 * 1024,
 			backupCount=1
-		), # Настройка логирования с ротацией по размеру
+		), # Setting up logging with rotation by size
         logging.StreamHandler()
 	],
 )

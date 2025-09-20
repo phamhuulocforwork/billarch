@@ -81,25 +81,25 @@ class Config:
 	@staticmethod
 	def _validate_theme(theme_name: str, wallpapers: List[str]) -> Optional[Theme]:
 		"""
-		Проверяет, правильно ли укомплектована тема. 
-		Если да, то возвращает Theme
-		В противном случае возвращает None
+		Checks if the theme is properly equipped.
+		If yes, returns Theme
+		Otherwise returns None
 
 		Args:
-			theme_name: str - Название темы, которую нужно проверить.
-			wallpapers: List[str] - Список путей до обоев
+			theme_name: str - Name of the theme to check.
+			wallpapers: List[str] - List of paths to wallpapers
 		"""
 		path_to_theme: Path = BILLARCH_DIR / "themes" / theme_name
 		icon = BILLARCH_ASSETS / "default-theme-icon.png"
 
-		##==> Проверка наличия обоев
+		##==> Checking for wallpaper availability
 		###########################################
 		wallpapers = [wp for wp in wallpapers if Path(wp).exists()]
 		if len(wallpapers) == 0:
 			logging.error(f"No available wallpapers for theme {theme_name}")
 			return
 
-		##==> Проверка наличия иконки
+		##==> Checking for icon availability
 		###########################################
 		path_to_theme_icon: Path = path_to_theme/f"{theme_name}.png"
 		if path_to_theme_icon.exists():

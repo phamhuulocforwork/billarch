@@ -45,7 +45,7 @@ class ThemeManager:
 
 
 	def set_theme(self, theme: Union[str, Theme]) -> None:
-		##==> Проверка входящих данных
+		##==> Checking input data
 		##########################################
 		if isinstance(theme, str):
 			logging.debug(f"The process of installing the \"{theme}\" theme has begun")
@@ -59,8 +59,8 @@ class ThemeManager:
 
 		elif isinstance(theme, Theme):
 			logging.debug(f"The process of installing the \"{theme.name}\" theme has begun")
-			
-		##==> Применение темы
+
+		##==> Applying theme
 		##########################################
 		for option in theme_options:
 			try:
@@ -71,7 +71,7 @@ class ThemeManager:
 		self.current_theme = theme
 		Config._set_theme(theme_name=theme.name)
 
-		##==> Устанавливаем подходящие обои
+		##==> Setting up suitable wallpapers
 		##########################################
 		current_wallpaper = Config.get_current_wallpaper()
 		if current_wallpaper is None or not Path(current_wallpaper).exists():
