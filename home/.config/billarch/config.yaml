@@ -1,6 +1,6 @@
-current-wtheme: catppuccin-mocha
+current-wtheme: billarch
 current-wwallpaper: ~/.config/billarch/wallpapers/42.png
-current-xtheme: catppuccin-mocha
+current-xtheme: billarch
 current-xwallpaper: ~/.config/billarch/wallpapers/42.png
 custom-wallpapers:
   - ~/.config/billarch/wallpapers/archlinux.png
@@ -10,5 +10,8 @@ themes:
     available_wallpapers:
       - ~/.config/billarch/wallpapers/archlinux.png
   catppuccin-mocha:
+    available_wallpapers:
+      - ~/.config/billarch/wallpapers/archlinux.png
+  billarch:
     available_wallpapers:
       - ~/.config/billarch/wallpapers/archlinux.png
