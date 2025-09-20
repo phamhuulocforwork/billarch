@@ -57,9 +57,9 @@ alias yb="yarn build"
 alias yd="yarn dev"
 
 # System Utils
-alias reload="source ~/.zshrc"
-alias editrc="code ~/.zshrc"
-alias editalias="code ~/.zsh_aliases"
+alias reload="source ~/.config/fish/config.fish"
+alias editrc="code ~/.config/fish/config.fish"
+alias editfish="code ~/.config/fish/config.fish"
 
 # Docker Shortcuts
 alias dc="docker-compose" 
@@ -87,99 +87,100 @@ function nvidia-settings
     command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
 end
 
-function mkcd() {
-    mkdir -p "$1" && cd "$1"
-}
+function mkcd
+    mkdir -p "$argv[1]"; and cd "$argv[1]"
+end
 
-function ginit() {
+function ginit
     git init
     git add .
     git commit -m "feat: initial commit"
-}
+end
 
-function gclone() {
-    git clone "git@github.com:phamhuulocforwork/$1.git"
-    if [ "$2" ]; then
-        cd "$2"
+function gclone
+    git clone "git@github.com:phamhuulocforwork/$argv[1].git"
+    if test (count $argv) -ge 2
+        cd "$argv[2]"
     else
-        cd "$1"
-    fi
-}
+        cd "$argv[1]"
+    end
+end
 
-function mclone() {
-  local file="$1"
+function mclone
+    set file "$argv[1]"
 
-  if [[ -z "$file" || ! -f "$file" ]]; then
-    echo "Usage: mclone <file_with_repo_urls>"
-    return 1
-  fi
+    if test -z "$file" -o ! -f "$file"
+        echo "Usage: mclone <file_with_repo_urls>"
+        return 1
+    end
 
-  local repos=()
-  while IFS= read -r line; do
-    line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-    [[ -z "$line" || "$line" =~ ^# ]] && continue
-    repos+=("$line")
-  done < "$file"
+    set repos
+    while read -l line
+        set line (echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+        if test -n "$line" -a (string match -v -r '^#' "$line")
+            set repos $repos "$line"
+        end
+    end < "$file"
 
-  local n=${#repos[@]}
-  if [[ $n -eq 0 ]]; then
-    echo "File does not have a valid repo"
-    return 1
-  fi
+    set n (count $repos)
+    if test $n -eq 0
+        echo "File does not have a valid repo"
+        return 1
+    end
 
-  echo "Cloning $n repos in parallel..."
+    echo "Cloning $n repos in parallel..."
 
-  if command -v parallel >/dev/null 2>&1; then
-    printf "%s\n" "${repos[@]}" | parallel -j "$n" 'git clone "{}"'
-  else
-    for repo in "${repos[@]}"; do
-      git clone "$repo" &
-    done
-    wait
-  fi
-}
-
-function clone() {
-    git clone "$1"
-    if [ "$2" ]; then
-        cd "$2"
+    if command -v parallel >/dev/null 2>&1
+        printf "%s\n" $repos | parallel -j "$n" 'git clone "{}"'
     else
-        cd "$(basename "$1" .git)"
-    fi
-}
+        for repo in $repos
+            git clone "$repo" &
+        end
+        wait
+    end
+end
 
-function system-clean() {
-  echo "Cleaning temp files in /tmp and /var/tmp..."
-  sudo rm -rf /tmp/* /var/tmp/*
+function clone
+    git clone "$argv[1]"
+    if test (count $argv) -ge 2
+        cd "$argv[2]"
+    else
+        cd (basename "$argv[1]" .git)
+    end
+end
 
-  echo "Cleaning apt cache..."
-  if command -v apt-get &>/dev/null; then
-    sudo apt-get clean -y
-    sudo apt-get autoclean -y
-    sudo apt-get autoremove -y
-  fi
+function system-clean
+    echo "Cleaning temp files in /tmp and /var/tmp..."
+    sudo rm -rf /tmp/* /var/tmp/*
 
-  echo "Cleaning pip, npm, and user cache..."
-  rm -rf ~/.cache/pip ~/.npm ~/.cache/* ~/.local/share/*Trash*/files/*
+    echo "Cleaning apt cache..."
+    if command -v apt-get >/dev/null 2>&1
+        sudo apt-get clean -y
+        sudo apt-get autoclean -y
+        sudo apt-get autoremove -y
+    end
 
-  echo "Cleaning old logs..."
-  sudo journalctl --vacuum-time=7d
-  sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
+    echo "Cleaning pip, npm, and user cache..."
+    rm -rf ~/.cache/pip ~/.npm ~/.cache/* ~/.local/share/*Trash*/files/*
 
-  echo "Done!"
-}
+    echo "Cleaning old logs..."
+    sudo journalctl --vacuum-time=7d
+    sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
 
-function venv-clean() {
-  echo "Deleting 'venv' folders..."
-  find . -type d -name "venv" -exec rm -rf {} +
-  echo "Done"
-}
+    echo "Done!"
+end
 
-function npkill() {
-  echo "Deleting 'node_modules' ..."
-  find . -type d -name "node_modules" -exec rm -rf {} +
-  echo "Done"
-}
+function venv-clean
+    echo "Deleting 'venv' folders..."
+    find . -type d -name "venv" -exec rm -rf {} +
+    echo "Done"
+end
+
+function npkill
+    echo "Deleting 'node_modules' ..."
+    find . -type d -name "node_modules" -exec rm -rf {} +
+    echo "Done"
+end
 
 #####################################
 ##==> Interactive Session Settings
@@ -207,4 +208,4 @@ pyenv init - | source
 #####################################
 ##==> Fun Stuff
 #####################################
-pokemon-colorscripts --no-title -s -r 1,3,6
+fastfetch
