@@ -111,7 +111,7 @@ tooltip {
 #taskbar,
 #clock,
 #idle_inhibitor,
-#language,
+#custom-fcitx5,
 #custom-l_end,
 #custom-r_end {
   color: @main-fg;
