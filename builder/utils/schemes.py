@@ -2,11 +2,9 @@ from dataclasses import dataclass, field
 from typing import List
 from enum import Enum
 
-
 class AurHelper(Enum):
     YAY = "yay"
     PARU = "paru"
-
 
 @dataclass
 class DistributionPackages:
@@ -14,18 +12,15 @@ class DistributionPackages:
     bspwm_packages: List[str] = field(default_factory=list)
     hyprland_packages: List[str] = field(default_factory=list)
 
-
 @dataclass
 class Packages:
     pacman: DistributionPackages = field(default_factory=DistributionPackages)
     aur: DistributionPackages = field(default_factory=DistributionPackages)
 
-
 @dataclass
 class NotInstalledPackages:
     pacman: List[str] = field(default_factory=list)
     aur: List[str] = field(default_factory=list)
-
 
 @dataclass
 class PackageInfo:
@@ -33,7 +28,6 @@ class PackageInfo:
     aur: bool = field(default=False, kw_only=True)
     recommended: bool = field(default=False, kw_only=True)
     selected: bool = field(default=False, kw_only=True)
-
 
 @dataclass
 class BuildOptions:

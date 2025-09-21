@@ -9,7 +9,6 @@ from packages import CUSTOM
 from utils.banner import clear_and_banner
 from utils.schemes import BuildOptions, AurHelper
 
-
 class Question:
     answers_type = Dict[str, Union[str, List[str]]]
 
@@ -98,14 +97,14 @@ class Question:
                 name="install_wm",
                 message="2) Which window manager do you want to install?",
                 choices=["hyprland", "bspwm"],
-                default=["bspwm", "hyprland"],
+                default="hyprland",
                 carousel=True,
             ),
             QuestionList(
                 name="aur_helper",
                 message="3) What kind of AUR helper do you want to have?",
                 choices=["yay", "paru"],
-                default="paru",
+                default="yay",
                 carousel=True,
             ),
             QuestionList(

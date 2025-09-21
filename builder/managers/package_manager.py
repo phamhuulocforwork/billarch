@@ -6,7 +6,6 @@ from typing import List
 from loguru import logger
 from utils.schemes import AurHelper
 
-
 class PackageManager:
     @staticmethod
     def update_database() -> None:

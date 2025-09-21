@@ -6,7 +6,6 @@ import traceback
 from loguru import logger
 from packages import CUSTOM
 
-
 class PostInstallation:
     @staticmethod
     def apply():

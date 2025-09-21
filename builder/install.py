@@ -12,7 +12,6 @@ from packages import BASE, CUSTOM
 from question import Question
 from utils.schemes import AurHelper, BuildOptions, NotInstalledPackages
 
-
 class Builder:
     not_installed_packages = NotInstalledPackages()
 
@@ -150,7 +149,6 @@ class Builder:
                 )
 
         logger.success("The setting of the daemons is complete!")
-
 
 if __name__ == "__main__":
     logger.add(

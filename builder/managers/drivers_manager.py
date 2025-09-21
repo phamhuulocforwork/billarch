@@ -7,7 +7,6 @@ from packages import DRIVERS
 
 from .package_manager import PackageManager
 
-
 class DriversManager:
     @staticmethod
     def get_gpu_vendor() -> str:

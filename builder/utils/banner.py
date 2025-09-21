@@ -13,7 +13,6 @@ banner: str = """
 ╚═════╝░╚═╝╚══════╝╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝╚═╝░░╚═╝
 """
 
-
 def clear_and_banner() -> None:
     subprocess.run("clear", shell=True)
     print(banner)

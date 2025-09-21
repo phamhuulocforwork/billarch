@@ -4,17 +4,17 @@ BASE = Packages(
 	pacman=DistributionPackages(
 		common=[
 			"pacman-contrib", "downgrade", "libnotify", "ffmpeg","ffmpegthumbnailer", "jq", "parallel", "kitty", "fastfetch", "lsd", "bat", "brightnessctl", 
-			"automake", "blueman", "bluez", "bluez-utils", "dunst", "fakeroot", "firefox", "fish", "fisher", "dpkg", "gcc", "git", "gnu-netcat", "btop", 
+			"automake", "blueman", "bluez", "bluez-utils", "dunst", "fakeroot", "fish", "fisher", "dpkg", "gcc", "git", "gnu-netcat", "btop", 
 			"micro", "mat2", "nemo", "papirus-icon-theme", "pavucontrol", "pamixer", "pipewire", "pipewire-pulse", "pipewire-audio",
 			"pipewire-jack", "pipewire-alsa", "wireplumber", "python-pyalsa", "ranger", "redshift", "reflector", "sudo", "tree", "unrar",
 			"zip", "unzip", "uthash", "ark", "cmake", "clang", "gzip", "imagemagick",
 			"make", "openssh", "shellcheck", "vlc", "loupe", "usbutils", "openvpn", "networkmanager-openvpn", "p7zip", "gparted",
 			"sshfs", "wget", "netctl", "libreoffice", "ttf-jetbrains-mono", "ttf-jetbrains-mono-nerd", "ttf-fira-code",
-        	"ttf-iosevka-nerd", "playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
-        	"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
+			"ttf-iosevka-nerd", "playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
+			"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
 			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "neovim", "tmux", "cowsay", "polkit-gnome",
 			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "ttf-hack-nerd", "networkmanager", "noto-fonts", 
-            "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland"
+      "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland"
 		],
 		bspwm_packages=["xorg", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh", "lxappearance", "polybar", "xorg-xrandr", "xsettingsd"],
 		hyprland_packages=[
@@ -63,29 +63,24 @@ DRIVERS = {
 }
 
 CUSTOM = {
-    "development": {
-        "obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
-        "postgresql": PackageInfo("Sophisticated object-relational DBMS", recommended=True),
-        "pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True, recommended=True),
-        "redis": PackageInfo("An in-memory database that persists on disk")
+	"development": {
+		"obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
+		"postgresql": PackageInfo("Sophisticated object-relational DBMS", recommended=True),
+		"pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True, recommended=True),
+		"redis": PackageInfo("An in-memory database that persists on disk")
 	},
-    "social_media": {
-		"telegram-desktop": PackageInfo("Popular messenger", recommended=True, selected=True),
-        "discord": PackageInfo("Popular social platform", recommended=True),
-		"vesktop": PackageInfo("Custom Discord client", recommended=True, aur=True)
+	"social_media": {
+		"discord": PackageInfo("Popular social platform", recommended=True selected=True),
 	},
 	"games": {
 		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
 		"gamemode": PackageInfo("Game optimization tool", recommended=True, selected=True), 
-		"mangohud": PackageInfo("Displays metrics in running games"),
-        "portproton": PackageInfo("Launcher for Windows games with good optimization", recommended=True, aur=True)
 	},
-    "entertainment": {
-        "yandex-music": PackageInfo("Personal recommendations, selections for any occasion and new music", aur=True, recommended=True),
-        "spotify": PackageInfo("A proprietary music streaming service", aur=True, recommended=True)
+	"entertainment": {
+		"spotify": PackageInfo("A proprietary music streaming service", aur=True, recommended=True)
 	},
-    "office": {
-        "libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),
-        "onlyoffice-bin": PackageInfo("Office suite that allows collaborative editing of documents", aur=True, recommended=True)
-    }
+	"office": {
+		"libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),
+		"onlyoffice-bin": PackageInfo("Office suite that allows collaborative editing of documents", aur=True, recommended=True)
+	}
 }

@@ -9,7 +9,6 @@ from loguru import logger
 
 from .package_manager import PackageManager
 
-
 class AppsManager:
     @staticmethod
     def configure_code() -> str:
