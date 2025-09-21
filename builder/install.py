@@ -72,7 +72,7 @@ class Builder:
         logger.warning("Pacman: " + ", ".join(self.not_installed_packages.pacman))
         logger.warning("Aur: " + ", ".join(self.not_installed_packages.aur))
         logger.success(
-            "Meowch has been successfully installed! Restart your PC to apply the changes."
+            "Billarch has been successfully installed! Restart your PC to apply the changes."
         )
 
         is_reboot = inquirer.confirm("Do you want to reboot?")

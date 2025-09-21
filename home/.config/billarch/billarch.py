@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
 	##==> Setting up accepted arguments
 	###############################################
-	parser = ArgumentParser(description='Transform your meowch beyond recognition!', formatter_class=RawTextHelpFormatter)
+	parser = ArgumentParser(description='Transform your billarch beyond recognition!', formatter_class=RawTextHelpFormatter)
 	setting_args(parser)
 	args = parser.parse_args()
 	logging.debug(f"Passed arguments: {args}")

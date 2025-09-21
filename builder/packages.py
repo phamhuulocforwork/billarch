@@ -67,12 +67,14 @@ DRIVERS = {
 CUSTOM = {
 	"development": {
 		"obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
-		"postgresql": PackageInfo("Sophisticated object-relational DBMS", recommended=True),
-		"pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True, recommended=True),
-		"redis": PackageInfo("An in-memory database that persists on disk")
+		"cursor-bin": PackageInfo("A simple and highly customizable animated cursor", aur=True, recommended=True, selected=True),
 	},
 	"social_media": {
 		"discord": PackageInfo("Popular social platform", recommended=True, selected=True),
+		"zalo-macos": PackageInfo("Zalo is an application that allows users to make free calls and send free messages", aur=True, recommended=True, selected=True)
+	},
+	"tools": {
+		"obs-studio": PackageInfo("A cross-platform video recording and live streaming software", recommended=True, selected=True),
 	},
 	"games": {
 		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
