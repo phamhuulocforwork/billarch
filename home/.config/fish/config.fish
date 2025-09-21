@@ -182,6 +182,30 @@ function npkill
     echo "Done"
 end
 
+function ssh-setup
+    echo -e "Generating SSH key..."
+
+    set SSH_KEY "$HOME/.ssh/id_ed25519"
+    if test ! -f "$SSH_KEY"
+        mkdir -p "$HOME/.ssh"
+        ssh-keygen -t ed25519 -C "phamhuulocforwork@gmail.com" -f "$SSH_KEY" -N "PhamHuuLoc"
+        echo -e "SSH key generated at $SSH_KEY "
+    else
+        echo -e "SSH key already exists at $SSH_KEY "
+    end
+
+    if command -v wl-copy >/dev/null 2>&1
+        cat "$SSH_KEY.pub" | wl-copy
+        echo -e "SSH public key copied to clipboard (Wayland) "
+    else if command -v xclip >/dev/null 2>&1
+        cat "$SSH_KEY.pub" | xclip -selection clipboard
+        echo -e "SSH public key copied to clipboard (X11) "
+    elseHuuLoc
+        echo -e "Neither wl-copy nor xclip found. Please install one to copy SSH key to clipboard. "
+        echo -e "You can still get your key with: cat $SSH_KEY.pub "
+    end
+end
+
 #####################################
 ##==> Interactive Session Settings
 #####################################

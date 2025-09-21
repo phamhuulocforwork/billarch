@@ -1,10 +1,10 @@
-@define-color bar-bg rgba(30, 30, 46, 0);
-@define-color main-bg rgba(30, 30, 46, 0.8);
-@define-color main-fg rgba(180,190,254,1);
-@define-color wb-act-bg rgba(180,190,254,0.9);
-@define-color wb-act-fg rgba(0,0,0,0.7);
-@define-color wb-hvr-bg rgba(75,75,125,0.4);
-@define-color wb-hvr-fg rgba(174,170,240,0.8);
+@define-color bar-bg rgba(40, 44, 52, 0);
+@define-color main-bg rgba(40, 44, 52, 0.8);
+@define-color main-fg rgba(171,178,191,1);
+@define-color wb-act-bg rgba(74,165,240,0.9);
+@define-color wb-act-fg rgba(40,44,52,0.7);
+@define-color wb-hvr-bg rgba(63,68,81,0.4);
+@define-color wb-hvr-fg rgba(171,178,191,0.8);
 
 * {
   border: none;
