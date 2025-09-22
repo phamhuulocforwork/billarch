@@ -188,7 +188,7 @@ class PackageManager:
     @staticmethod
     def update_pacman_conf(*, enable_multilib: bool = False):
         pacman_config_path = "/etc/pacman.conf"
-        temp_pacman_config_path = "/tmp/meowrhc-pacman.conf"
+        temp_pacman_config_path = "/tmp/billarch-pacman.conf"
 
         updated_lines = []
         multilib_found = False
