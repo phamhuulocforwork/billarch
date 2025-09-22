@@ -12,7 +12,7 @@ BASE = Packages(
 			"sshfs", "wget", "netctl", "libreoffice", "ttf-jetbrains-mono", "ttf-jetbrains-mono-nerd", "ttf-fira-code",
 			"ttf-iosevka-nerd", "playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
 			"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
-			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "neovim", "tmux", "cowsay", "polkit-gnome",
+			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "neovim", "tmux", "polkit-gnome",
 			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "ttf-hack-nerd", "networkmanager", "noto-fonts", 
       "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland",
 			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt"
@@ -75,6 +75,7 @@ CUSTOM = {
 	},
 	"tools": {
 		"obs-studio": PackageInfo("A cross-platform video recording and live streaming software", recommended=True, selected=True),
+		"bleachbit-git": PackageInfo("A tool for cleaning up your system", aur=True, recommended=True, selected=True),
 	},
 	"games": {
 		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
