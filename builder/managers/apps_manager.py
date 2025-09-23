@@ -70,25 +70,6 @@ class AppsManager:
             logger.error(
                 f"The installation of the SDDM theme failed: {traceback.format_exc()}"
             )
-    
-    @staticmethod
-    def configure_hyprland_session() -> None:
-        logger.info("Creating Hyprland session file for SDDM")
-        session_dir = "/usr/share/wayland-sessions"
-        session_file = f"{session_dir}/hyprland.desktop"
-        
-        try:
-            subprocess.run(["sudo", "mkdir", "-p", session_dir], check=True)
-            
-            with open("/tmp/hyprland.desktop", "w") as f:
-                f.write(f"[Desktop Entry]\nName=Hyprland\nComment=An intelligent dynamic tiling Wayland compositor\nExec=Hyprland\nType=Application\n")
-                
-            subprocess.run(["sudo", "cp", "/tmp/hyprland.desktop", session_file], check=True)
-            subprocess.run(["rm", "/tmp/hyprland.desktop"], check=True)
-            
-            logger.success("Hyprland session file created successfully!")
-        except Exception:
-            logger.error(f"Failed to create Hyprland session file: {traceback.format_exc()}")
 
     @staticmethod
     def configure_grub() -> None:
