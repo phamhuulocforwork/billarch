@@ -60,6 +60,10 @@ class Builder:
 
         AppsManager.configure_grub()
         AppsManager.configure_sddm()
+
+        if self.build_options.install_hyprland:
+            AppsManager.configure_hyprland_session()
+
         AppsManager.configure_zen_browser()
         AppsManager.configure_code()
 
