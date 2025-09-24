@@ -200,7 +200,7 @@ function ssh-setup
     else if command -v xclip >/dev/null 2>&1
         cat "$SSH_KEY.pub" | xclip -selection clipboard
         echo -e "SSH public key copied to clipboard (X11) "
-    elseHuuLoc
+    else
         echo -e "Neither wl-copy nor xclip found. Please install one to copy SSH key to clipboard. "
         echo -e "You can still get your key with: cat $SSH_KEY.pub "
     end
