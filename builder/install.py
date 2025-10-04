@@ -59,7 +59,7 @@ class Builder:
         self.drivers_installation()
 
         AppsManager.configure_grub()
-        # AppsManager.configure_sddm()  #FIXME: Commented out to disable SDDM theme setup
+        AppsManager.configure_sddm()
         AppsManager.configure_zen_browser()
         AppsManager.configure_code()
 
@@ -128,7 +128,7 @@ class Builder:
         logger.info("The daemons are starting to run...")
 
         daemons = {
-            "enable": ["NetworkManager", "bluetooth.service" # , "sddm.service"  #FIXME: Commented out to disable SDDM service enablement
+            "enable": ["NetworkManager", "bluetooth.service" , "sddm.service"
             ],
             "start": ["bluetooth.service"],
         }
