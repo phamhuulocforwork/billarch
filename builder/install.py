@@ -62,6 +62,7 @@ class Builder:
         AppsManager.configure_sddm()
         AppsManager.configure_zen_browser()
         AppsManager.configure_code()
+        AppsManager.configure_spotify()
 
         self.daemons_setting()
         PostInstallation.apply()

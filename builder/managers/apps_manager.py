@@ -24,6 +24,28 @@ class AppsManager:
             PackageManager.install_packages(packages_list=["code"])
 
     @staticmethod
+    def configure_spotify() -> str:
+        try:
+            result = subprocess.run(
+                ["spotify", "--version"], capture_output=True, text=True
+            )
+            spotify_exists = result.returncode == 0
+        except FileNotFoundError:
+            spotify_exists = False
+
+        if not spotify_exists:
+            PackageManager.install_packages(packages_list=["spotify"])
+            try:
+                subprocess.run(
+                    ["bash", "-c", "curl -sSL https://spotx-official.github.io/run.sh | bash"],
+                    check=True
+                )
+                logger.success("SpotX has been successfully installed!")
+            except Exception:
+                logger.error(f"Error installing SpotX: {traceback.format_exc()}")
+        return "Spotify and SpotX installation attempted."
+
+    @staticmethod
     def configure_zen_browser() -> None:
         logger.info("Start installing Zen Browser")
 
