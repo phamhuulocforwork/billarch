@@ -109,7 +109,7 @@ end
 function mclone
     set file "$argv[1]"
 
-    if test -z "$file" -o ! -f "$file"
+    if test -z "$file"; or not test -f "$file"
         echo "Usage: mclone <file_with_repo_urls>"
         return 1
     end
@@ -117,9 +117,10 @@ function mclone
     set repos
     while read -l line
         set line (echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-        if test -n "$line" -a (string match -v -r '^#' "$line")
-            set repos $repos "$line"
+        if test -z "$line"; or string match -r '^#' "$line"
+            continue
         end
+        set repos $repos "$line"
     end < "$file"
 
     set n (count $repos)
@@ -131,10 +132,10 @@ function mclone
     echo "Cloning $n repos in parallel..."
 
     if command -v parallel >/dev/null 2>&1
-        printf "%s\n" $repos | parallel -j "$n" 'git clone "{}"'
+        printf "%s\n" $repos | parallel -j "$n" 'GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone {}'
     else
         for repo in $repos
-            git clone "$repo" &
+            env GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone $repo &
         end
         wait
     end
@@ -188,7 +189,7 @@ function ssh-setup
     set SSH_KEY "$HOME/.ssh/id_ed25519"
     if test ! -f "$SSH_KEY"
         mkdir -p "$HOME/.ssh"
-        ssh-keygen -t ed25519 -C "phamhuulocforwork@gmail.com" -f "$SSH_KEY" -N "PhamHuuLoc"
+        ssh-keygen -t ed25519 -C "phamhuulocforwork@gmail.com" -f "$SSH_KEY" -N ""
         echo -e "SSH key generated at $SSH_KEY "
     else
         echo -e "SSH key already exists at $SSH_KEY "
