@@ -3,25 +3,6 @@ current-wwallpaper: ~/.config/billarch/wallpapers/dark/1.png
 current-xtheme: billarch
 current-xwallpaper: ~/.config/billarch/wallpapers/dark/1.png
 custom-wallpapers:
-  - ~/.config/billarch/wallpapers/dark/1.png
-  - ~/.config/billarch/wallpapers/dark/2.png
-  - ~/.config/billarch/wallpapers/dark/3.png
-  - ~/.config/billarch/wallpapers/dark/4.png
-  - ~/.config/billarch/wallpapers/dark/5.png
-  - ~/.config/billarch/wallpapers/dark/6.png
-  - ~/.config/billarch/wallpapers/dark/7.png
-  - ~/.config/billarch/wallpapers/dark/8.png
-  - ~/.config/billarch/wallpapers/dark/9.png
-  - ~/.config/billarch/wallpapers/dark/10.png
-  - ~/.config/billarch/wallpapers/dark/11.png
-  - ~/.config/billarch/wallpapers/dark/12.png
-  - ~/.config/billarch/wallpapers/dark/13.png
-  - ~/.config/billarch/wallpapers/dark/14.png
-  - ~/.config/billarch/wallpapers/light/1.png
-  - ~/.config/billarch/wallpapers/light/2.png
-  - ~/.config/billarch/wallpapers/light/3.png
-  - ~/.config/billarch/wallpapers/light/4.png
-  - ~/.config/billarch/wallpapers/light/5.gif
 themes:
   billarch:
     available_wallpapers:

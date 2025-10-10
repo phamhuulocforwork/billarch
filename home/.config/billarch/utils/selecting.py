@@ -60,7 +60,7 @@ class Selector:
 
 		for name, icon in elements.items():
 			if icon.is_file():
-				thumbnail = cache_dir / f"{icon.stem}.png"
+				thumbnail = cache_dir / f"{icon.stem}{icon.suffix}"
 				thumbnails.append(thumbnail)
 				image_paths.append(icon)
 
