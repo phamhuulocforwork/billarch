@@ -6,8 +6,6 @@ custom-wallpapers:
   - ~/.config/billarch/wallpapers/gif/1.gif
   - ~/.config/billarch/wallpapers/gif/2.gif
   - ~/.config/billarch/wallpapers/gif/3.gif
-  - ~/.config/billarch/wallpapers/gif/4.gif
-  - ~/.config/billarch/wallpapers/gif/5.gif
 themes:
   billarch:
     available_wallpapers:
