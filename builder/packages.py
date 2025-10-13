@@ -9,11 +9,11 @@ BASE = Packages(
 			"pipewire-jack", "pipewire-alsa", "wireplumber", "python-pyalsa", "ranger", "redshift", "reflector", "sudo", "tree", "unrar",
 			"zip", "unzip", "uthash", "ark", "cmake", "clang", "gzip", "imagemagick",
 			"make", "openssh", "shellcheck", "vlc", "loupe", "usbutils", "openvpn", "networkmanager-openvpn", "p7zip", "gparted",
-			"sshfs", "wget", "netctl", "libreoffice", "ttf-jetbrains-mono", "ttf-jetbrains-mono-nerd", "ttf-fira-code",
-			"ttf-iosevka-nerd", "playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
+			"sshfs", "wget", "netctl", "ttf-ubuntu-nerd", "ttf-ubuntu-mono-nerd", "ttf-fira-code",
+			"playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
 			"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
 			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "neovim", "tmux", "polkit-gnome",
-			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "ttf-hack-nerd", "networkmanager", "noto-fonts", 
+			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "networkmanager", "noto-fonts", 
       "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland",
 			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt"
 		],
@@ -26,7 +26,7 @@ BASE = Packages(
 		common=[
 			"gnu-netcat", "downgrade","gnome-calculator-gtk3", "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula",
 			"themix-theme-oomox-git", "themix-plugin-base16-git", "themix-gui-git", "themix-export-spotify-git",
-			"themix-theme-materia-git", "oomox-qt5-styleplugin-git", "oomox-qt6-styleplugin-git", "cava", "pokemon-colorscripts",
+			"themix-theme-materia-git", "oomox-qt5-styleplugin-git", "oomox-qt6-styleplugin-git", "cava", "ttf-firacode-nerd",
 			"youtube-dl", "update-grub", "ttf-meslo-nerd-font-powerlevel10k", "visual-studio-code-bin", "fcitx5-bamboo",
 		],
 		bspwm_packages=["i3lock-color", "picom-ftlabs-git"],
@@ -67,7 +67,7 @@ DRIVERS = {
 CUSTOM = {
 	"development": {
 		"obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
-		"cursor-bin": PackageInfo("A simple and highly customizable animated cursor", aur=True, recommended=True, selected=True),
+		"cursor-bin": PackageInfo("A simple and highly customizable animated cursor", aur=True, recommended=True, selected=False),
 	},
 	"social_media": {
 		"discord": PackageInfo("Popular social platform", recommended=True, selected=True),
@@ -78,13 +78,10 @@ CUSTOM = {
 		"bleachbit-git": PackageInfo("A tool for cleaning up your system", aur=True, recommended=True, selected=True),
 	},
 	"games": {
-		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
+		"steam": PackageInfo("The best launcher for games", recommended=True, selected=False), 
 		"gamemode": PackageInfo("Game optimization tool", recommended=True, selected=True), 
 		"mangohud": PackageInfo("Displays metrics in running games"),
 		"portproton": PackageInfo("Launcher for Windows games with good optimization", recommended=True, aur=True)
-	},
-	"entertainment": {
-		"spotify": PackageInfo("A proprietary music streaming service", aur=True, recommended=True, selected=True),
 	},
 	"office": {
 		"libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),

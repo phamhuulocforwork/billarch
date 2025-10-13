@@ -3,7 +3,7 @@
 
 gtk-theme-name=meowrch-catppuccin-mocha
 gtk-icon-theme-name="Tela-circle-dracula"
-gtk-font-name="JetBrainsMono Nerd Font 12"
+gtk-font-name="UbuntuMono Nerd Font 12"
 gtk-cursor-theme-name="Bibata-Modern-Classic"
 gtk-cursor-theme-size=20
 gtk-toolbar-style=GTK_TOOLBAR_BOTH

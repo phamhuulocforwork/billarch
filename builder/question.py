@@ -97,7 +97,7 @@ class Question:
                 name="install_wm",
                 message="2) Which window manager do you want to install?",
                 choices=["hyprland", "bspwm"],
-                default=["hyprland"],
+                default=["hyprland", "bspwm"],
                 carousel=True,
             ),
             QuestionList(
