@@ -11,6 +11,32 @@ from .package_manager import PackageManager
 
 class AppsManager:
     @staticmethod
+    @staticmethod
+    def configure_fish() -> None:
+        logger.info("Starting the Fish shell configuration process")
+        try:
+            subprocess.run(["fish", "--version"], check=True, capture_output=True)
+            fish_exists = True
+        except FileNotFoundError:
+            fish_exists = False
+
+        if not fish_exists:
+            PackageManager.install_packages(packages_list=["fish"])
+
+        try:
+            subprocess.run(["fish", "-c", "fisher install jorgebucaran/nvm.fish"], check=True)
+            logger.success("nvm has been successfully installed via fisher!")
+        except Exception:
+            logger.error(f"Error installing nvm: {traceback.format_exc()}")
+
+        try:
+            subprocess.run(["bash", "-c", "curl -LsSf https://astral.sh/uv/install.sh | sh"], check=True)
+            logger.success("uv has been successfully installed!")
+        except Exception:
+            logger.error(f"Error installing uv: {traceback.format_exc()}")
+        
+
+    @staticmethod
     def configure_code() -> str:
         try:
             result = subprocess.run(

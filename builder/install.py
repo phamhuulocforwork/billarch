@@ -63,6 +63,7 @@ class Builder:
         AppsManager.configure_zen_browser()
         AppsManager.configure_code()
         AppsManager.configure_spotify()
+        AppsManager.configure_fish()
 
         self.daemons_setting()
         PostInstallation.apply()
