@@ -8,11 +8,11 @@ BASE = Packages(
 			"micro", "mat2", "nemo", "papirus-icon-theme", "pavucontrol", "pamixer", "pipewire", "pipewire-pulse", "pipewire-audio",
 			"pipewire-jack", "pipewire-alsa", "wireplumber", "python-pyalsa", "ranger", "redshift", "reflector", "sudo", "tree", "unrar",
 			"zip", "unzip", "uthash", "ark", "cmake", "clang", "gzip", "imagemagick",
-			"make", "openssh", "shellcheck", "vlc", "loupe", "usbutils", "openvpn", "networkmanager-openvpn", "p7zip", "gparted",
+			"make", "openssh", "shellcheck", "vlc", "loupe", "usbutils", "openvpn", "networkmanager-openvpn", "gparted",
 			"sshfs", "wget", "netctl", "ttf-ubuntu-nerd", "ttf-ubuntu-mono-nerd", "ttf-fira-code",
 			"playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
 			"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
-			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "neovim", "tmux", "polkit-gnome",
+			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "tmux", "polkit-gnome",
 			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "networkmanager", "noto-fonts", 
       "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland",
 			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt"

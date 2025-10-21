@@ -1,12 +1,20 @@
 import os
 import json
 import psutil
-import GPUtil
 import argparse
-import pyamdgpuinfo
 import configparser
 from os.path import expandvars
 from dataclasses import dataclass
+
+try:
+	import GPUtil
+except ModuleNotFoundError:
+	GPUtil = None
+
+try:
+	import pyamdgpuinfo
+except ModuleNotFoundError:
+	pyamdgpuinfo = None
 
 
 # ┏━━━┳━━┳━┓┏━┳━━━┳┓╋╋┏━━┳━┓┏━┓
@@ -114,6 +122,8 @@ def get_gpu_info(label_mode: str):
 	temp_critical = False
 
 	try:
+		if GPUtil is None:
+			raise ModuleNotFoundError("GPUtil not available")
 		gpu = GPUtil.getGPUs()[0]
 		gpu_name = gpu.name
 		gpu_percent: float = round(gpu.load * 100, 2)
@@ -126,6 +136,8 @@ def get_gpu_info(label_mode: str):
 		temp_critical = icons.temp_critical
 	except:
 		try:
+			if pyamdgpuinfo is None:
+				raise ModuleNotFoundError("pyamdgpuinfo not available")
 			first_gpu = pyamdgpuinfo.get_gpu(0)
 			gpu_name = "N/A"
 			gpu_percent = int(first_gpu.query_load())
