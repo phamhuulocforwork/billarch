@@ -50,6 +50,16 @@ class AppsManager:
             PackageManager.install_packages(packages_list=["code"])
 
     @staticmethod
+    def configure_normcap() -> None:
+        logger.info("Starting the NormCap installation process")
+        try:
+            subprocess.run(["flatpak", "remote-add", "--if-not-exists", "flathub", "https://flathub.org/repo/flathub.flatpakrepo"], check=True)
+            subprocess.run(["flatpak", "install", "flathub", "com.github.dynobo.normcap", "--noninteractive"], check=True)
+            logger.success("NormCap has been successfully installed!")
+        except Exception:
+            logger.error(f"Error installing NormCap: {traceback.format_exc()}")
+
+    @staticmethod
     def configure_spotify() -> str:
         try:
             result = subprocess.run(

@@ -62,6 +62,7 @@ class Builder:
         AppsManager.configure_sddm()
         AppsManager.configure_zen_browser()
         AppsManager.configure_code()
+        AppsManager.configure_normcap()
         AppsManager.configure_spotify()
         AppsManager.configure_fish()
 

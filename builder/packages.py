@@ -15,7 +15,7 @@ BASE = Packages(
 			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "tmux", "polkit-gnome",
 			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "networkmanager", "noto-fonts", 
       "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland",
-			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt"
+			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt", "flatpak"
 		],
 		bspwm_packages=["xorg", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh", "lxappearance", "polybar", "xorg-xrandr", "xsettingsd"],
 		hyprland_packages=[
