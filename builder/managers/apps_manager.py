@@ -82,16 +82,6 @@ class AppsManager:
         return "Spotify and SpotX installation attempted."
 
     @staticmethod
-    def configure_zen_browser() -> None:
-        logger.info("Start installing Zen Browser")
-
-        try:
-            subprocess.run(["yay", "-S", "zen-browser-bin", "--noconfirm"], check=True)
-            logger.success("Zen Browser has been successfully installed!")
-        except Exception:
-            logger.error(f"Error installing Zen Browser: {traceback.format_exc()}")
-
-    @staticmethod
     def configure_sddm() -> None:
         logger.info("Starting the SDDM installation process")
         theme_name = "billarch"

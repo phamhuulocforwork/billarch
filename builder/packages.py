@@ -25,7 +25,7 @@ BASE = Packages(
 	aur=DistributionPackages(
 		common=[
 			"gnu-netcat", "downgrade","gnome-calculator-gtk3", "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula",
-			"themix-theme-oomox-git", "themix-plugin-base16-git", "themix-gui-git", "themix-export-spotify-git",
+			"themix-theme-oomox-git", "themix-plugin-base16-git", "themix-gui-git", "themix-export-spotify-git", "zen-browser-bin",
 			"themix-theme-materia-git", "oomox-qt5-styleplugin-git", "oomox-qt6-styleplugin-git", "cava", "ttf-firacode-nerd",
 			"youtube-dl", "update-grub", "ttf-meslo-nerd-font-powerlevel10k", "visual-studio-code-bin", "fcitx5-bamboo",
 		],
