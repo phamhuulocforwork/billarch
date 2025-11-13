@@ -42,6 +42,7 @@ class AppsManager:
             result = subprocess.run(
                 ["code", "--version"], capture_output=True, text=True
             )
+            subprocess.run(["sudo", "chown", "-R", f"{os.getlogin()}:{os.getlogin()}", "/opt/visual-studio-code"], check=True)
             code_exists = result.returncode == 0
         except FileNotFoundError:
             code_exists = False
