@@ -69,15 +69,37 @@ alias dcb="docker-compose build"
 alias dps="docker ps"
 alias di="docker images"
 
-# VS Code Shortcuts
+# IDE/Editor Shortcuts
 alias code="code ."
 alias cursor="cursor ."
+alias anti="antigravity ."
+alias zed="zed ."
 alias codeh="code ~"
 alias cursorh="cursor ~"
+alias antih="antigravity ~"
+alias zedh="zed ~"
 
 #####################################
 ##==> Custom Functions
 #####################################
+function wget
+    command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
+end
+
+function nvidia-settings
+    mkdir -p $XDG_CONFIG_HOME/nvidia/
+    command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
+end
+
+function y
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
+
 function wget
     command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
 end
@@ -208,29 +230,15 @@ function ssh-setup
 end
 
 #####################################
-##==> Interactive Session Settings
-#####################################
-if status is-interactive
-
-end
-
-if test "$PWD" = "$HOME"
-    fastfetch
-    cd ~/Github
-end
-
-#####################################
 ##==> Shell Customization
 #####################################
 starship init fish | source
 set fish_greeting
 
 #####################################
-##==> Development Tools
-#####################################
-##==> Pyenv
-pyenv init - | source
-
-#####################################
 ##==> Fun Stuff
 #####################################
+if test "$PWD" = "$HOME"
+    fastfetch
+    cd ~/Github
+end
