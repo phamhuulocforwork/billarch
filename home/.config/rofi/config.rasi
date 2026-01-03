@@ -8,7 +8,7 @@ configuration {
     display-window:              " ";
     drun-display-format:         "{name}";
     window-format:               "{w}{t}";
-    font:                        "UbuntuMono Nerd Font 10";
+    font:                        "JetBrainsMono Nerd Font 10";
     icon-theme:                  "Tela-circle-dracula";
 } 
 
@@ -45,7 +45,7 @@ dummywall {
     orientation:                 horizontal;
     children:                    [ "mode-switcher" ];
     background-color:            transparent;
-    background-image:            url("~/.config/billarch/current_wallpaper", height);
+    background-image:            url("~/.local/share/wallpapers/.current.wall", height);
 }
 
 

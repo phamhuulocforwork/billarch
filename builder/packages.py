@@ -2,89 +2,115 @@ from utils.schemes import DistributionPackages, PackageInfo, Packages
 
 BASE = Packages(
 	pacman=DistributionPackages(
-		common=[
-			"pacman-contrib", "libnotify", "ffmpeg","ffmpegthumbnailer", "jq", "parallel", "kitty", "fastfetch", "lsd", "bat", "brightnessctl", 
-			"automake", "blueman", "bluez", "bluez-utils", "dunst", "fakeroot", "fish", "fisher", "dpkg", "gcc", "git", "btop", 
-			"micro", "mat2", "nemo", "papirus-icon-theme", "pavucontrol", "pamixer", "pipewire", "pipewire-pulse", "pipewire-audio",
-			"pipewire-jack", "pipewire-alsa", "wireplumber", "python-pyalsa", "ranger", "redshift", "reflector", "sudo", "tree", "unrar",
-			"zip", "unzip", "uthash", "ark", "cmake", "clang", "gzip", "imagemagick",
-			"make", "openssh", "shellcheck", "vlc", "loupe", "usbutils", "openvpn", "networkmanager-openvpn", "gparted",
-			"sshfs", "wget", "netctl", "ttf-ubuntu-nerd", "ttf-ubuntu-mono-nerd", "ttf-fira-code",
-			"playerctl", "starship", "upower", "udiskie", "zenity", "gvfs", "qt5ct", "qt6ct",
-			"timeshift", "sddm", "qt5-graphicaleffects", "qt5-svg",  "qt5-quickcontrols2", "clipnotify",
-			"xdg-desktop-portal-gtk", "gnome-disk-utility", "evince", "tmux", "polkit-gnome",
-			"rofimoji", "wmname", "pyenv", "xdg-desktop-portal", "networkmanager", "noto-fonts", 
-      "noto-fonts-cjk", "noto-fonts-emoji", "noto-fonts-extra", "flameshot", "rofi-wayland",
-			"fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt", "flatpak"
+		common=[  
+			##==> Base tools and daemons
+			###########################################
+			"base-devel", "git", "networkmanager", "libnotify", "bluez", 
+            "bluez-utils", "playerctl", "upower", "brightnessctl", 
+			"udiskie", "xdg-desktop-portal-gtk", "xdg-desktop-portal",
+            "mkinitcpio", "xorg-server-xvfb", "gobject-introspection",
+            "power-profiles-daemon", "gvfs-mtp", "android-udev",
+
+			##==> Audio
+            ###########################################
+            "pipewire-jack", "pipewire-alsa", "wireplumber", 
+			"python-pyalsa", "pavucontrol", "pamixer", "pipewire", 
+			"pipewire-pulse", "pipewire-audio", "sof-firmware",
+            
+			##==> CLI-Tools
+			###########################################
+            "jq", "fastfetch", "lsd", "bat", "micro", "sudo",
+            "btop", "yazi", "starship", "openssh", "sshfs", 
+            "wget", "neovim", "tmux", "ffmpeg", "cliphist",
+            "tree", "bash-completion",
+
+			##==> GUI 
+			###########################################
+			"sddm", "plymouth", "firefox", "kitty", "blueman", "file-roller", "nemo", 
+            "nemo-fileroller", "gvfs", "ffmpegthumbnailer", "imagemagick", 
+            "vlc", "loupe", "qt5ct", "qt6ct", "qt5-graphicaleffects", 
+            "qt5-svg", "qt5-multimedia", "qt5-quickcontrols2", "gst-plugins-good", 
+            "redshift", "zenity", "polkit-gnome", "gnome-disk-utility","rofimoji",
+            "flameshot", "rofi", "qalculate-gtk", "fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt",
+            
+			##==> Fonts
+            ###########################################
+            "ttf-hack-nerd", "noto-fonts", "noto-fonts-cjk", 
+			"noto-fonts-emoji", "noto-fonts-extra", "ttf-iosevka-nerd", 
+			"ttf-jetbrains-mono", "ttf-jetbrains-mono-nerd", "ttf-firacode-nerd",
+			"ttf-fira-code",
 		],
-		bspwm_packages=["xorg", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh", "lxappearance", "polybar", "xorg-xrandr", "xsettingsd"],
+		bspwm_packages=[
+			"xorg-server", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh", 
+			"wmname", "polybar", "xorg-xrandr", "xsettingsd", "clipnotify",
+            "dunst", "xorg-xsetroot", "picom"
+		],
 		hyprland_packages=[
-			"hyprland", "waybar", "swww", "cliphist", "wl-clipboard", "xdg-desktop-portal-hyprland", "qt5-wayland", "qt6-wayland",
-			"xdg-desktop-portal-wlr", "hypridle"]
+			"hyprland", "waybar", "hyprlock", "swww", "wl-clipboard", 
+            "xdg-desktop-portal-hyprland", "qt5-wayland", "qt6-wayland",
+			"xdg-desktop-portal-wlr", "hypridle", "hyprpicker", "wlr-randr",
+            "uwsm", "libnewt", "swaync", "wl-clip-persist"
+        ]
 	),
 	aur=DistributionPackages(
 		common=[
-			"gnu-netcat", "downgrade","gnome-calculator-gtk3", "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula", "localsend-bin",
-			"themix-theme-oomox-git", "themix-plugin-base16-git", "themix-gui-git", "themix-export-spotify-git", "zen-browser-bin",
-			"themix-theme-materia-git", "oomox-qt5-styleplugin-git", "oomox-qt6-styleplugin-git", "cava", "ttf-firacode-nerd",
-			"youtube-dl", "update-grub", "ttf-meslo-nerd-font-powerlevel10k", "visual-studio-code-bin", "fcitx5-bamboo",
+            ##==> System
+            ###########################################
+            "meowrch-settings", "meowrch-tools", "update-grub",
+
+			##==> GUI
+            ###########################################
+            "visual-studio-code-bin", "nemo-tags", "hotkeyhub-bin", "fcitx5-bamboo",
+            
+            ##==> Customization: Themes, icons and cursors
+            ###########################################
+            "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula",
+            "pawlette",
+            
+            ##==> CLI-Tools
+            ###########################################
+            "cava", "pokemon-colorscripts",
+            
+            ##==> Fonts
+            ###########################################
+            "ttf-meslo-nerd-font-powerlevel10k",
 		],
-		bspwm_packages=["i3lock-color", "picom-ftlabs-git"],
-		hyprland_packages=["hyprpicker", "swaylock-effects-git", "wlr-randr-git", "hyprprop", "grimblast-git"]
+		bspwm_packages=["xkb-switch", "i3lock-color"],
+		hyprland_packages=[
+			"hyprprop", "grimblast-git", "mewline"
+		]
 	)
 )
 
-DRIVERS = {
-	"intel": Packages(
-		pacman=DistributionPackages(
-			common=[
-				"lib32-mesa", "vulkan-intel", "lib32-vulkan-intel", 
-				"vulkan-icd-loader", "lib32-vulkan-icd-loader", "intel-media-driver",
-				"libva-intel-driver", "xf86-video-intel"
-			]
-		)
-	),
-	"amd": Packages(
-		pacman=DistributionPackages(
-			common=[
-				"lib32-mesa", "vulkan-radeon", "lib32-vulkan-radeon", 
-				"vulkan-icd-loader", "lib32-vulkan-icd-loader"
-			]
-		)
-	),
-	"nvidia": Packages(
-		pacman=DistributionPackages(
-			common=[
-				"nvidia-dkms", "nvidia-utils", "lib32-nvidia-utils",
-				"nvidia-settings", "vulkan-icd-loader", "lib32-vulkan-icd-loader",
-				"lib32-opencl-nvidia", "opencl-nvidia", "libxnvctrl"
-			]
-		)
-	)
-}
-
 
 CUSTOM = {
-	"development": {
-		"obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
-		"cursor-bin": PackageInfo("A simple and highly customizable animated cursor", aur=True, recommended=True, selected=False),
+    "useful": {
+        "timeshift": PackageInfo("A system restore utility for Linux", recommended=True)
 	},
-	"social_media": {
-		"discord": PackageInfo("Popular social platform", recommended=True, selected=True),
-		"zalo-macos": PackageInfo("Zalo is an application that allows users to make free calls and send free messages", aur=True, recommended=True, selected=True)
+    "development": {
+        "obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
+        "postgresql": PackageInfo("Sophisticated object-relational DBMS", recommended=True),
+        "pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True, recommended=True),
+        "redis": PackageInfo("An in-memory database that persists on disk")
 	},
-	"tools": {
-		"obs-studio": PackageInfo("A cross-platform video recording and live streaming software", recommended=True, selected=True),
-		"bleachbit-git": PackageInfo("A tool for cleaning up your system", aur=True, recommended=True, selected=True),
+    "social_media": {
+		"telegram-desktop": PackageInfo("Popular messenger", recommended=True, selected=True),
+        "discord": PackageInfo("Popular social platform", recommended=True),
+		"vesktop": PackageInfo("Custom Discord client", recommended=True, aur=True)
 	},
 	"games": {
-		"steam": PackageInfo("The best launcher for games", recommended=True, selected=False), 
+		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
 		"gamemode": PackageInfo("Game optimization tool", recommended=True, selected=True), 
 		"mangohud": PackageInfo("Displays metrics in running games"),
-		"portproton": PackageInfo("Launcher for Windows games with good optimization", recommended=True, aur=True)
+        "portproton": PackageInfo("Launcher for Windows games with good optimization", recommended=True, aur=True)
 	},
-	"office": {
-		"libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),
-		"onlyoffice-bin": PackageInfo("Office suite that allows collaborative editing of documents", aur=True, recommended=True, selected=True)
-	}
+    "entertainment": {
+        "yandex-music": PackageInfo("Personal recommendations, selections for any occasion and new music", aur=True, recommended=True),
+        "spotify": PackageInfo("A proprietary music streaming service", aur=True, recommended=True)
+	},
+    "office": {
+        "libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),
+        "onlyoffice-bin": PackageInfo("Office suite that allows collaborative editing of documents", aur=True, recommended=True),
+		"evince": PackageInfo("Document viewer", selected=True, recommended=True)
+    }
 }

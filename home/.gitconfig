@@ -16,5 +16,3 @@
 [core]
   autocrlf = input
   ignorecase = false
-[credential "https://dev.azure.com"]
-  useHttpPath = true

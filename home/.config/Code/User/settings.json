@@ -1,0 +1,311 @@
+{
+  //=========================THEME & TYPOGRAPHY=========================
+  "editor.fontFamily": "FiraCode Nerd Font, Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": 600,
+  "editor.mouseWheelZoom": true,
+  "editor.suggestFontSize": 16,
+  "editor.suggestLineHeight": 30,
+  "editor.tabSize": 2,
+  "editor.indentSize": 2,
+  "editor.accessibilitySupport": "off",
+  "files.autoSave": "afterDelay",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.printWidth": 100,
+  "vscode_custom_css.imports": [
+    "file://${userHome}/custom.css",
+    "file://${userHome}/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
+  ],
+  "animations.Scrolling": "Slide",
+  "animations.Tabs": "Slide",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.guides.bracketPairs": "active",
+  "workbench.tree.indent": 8,
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/page.tsx": "${dirname} 🔹",
+    "**/app/**/layout.tsx": "${dirname} 🔺"
+  },
+  "editor.cursorBlinking": "expand",
+  "breadcrumbs.enabled": false,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.pinnedTabsOnSeparateRow": true,
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font, Consolas, 'Courier New', monospace",
+  "terminal.integrated.lineHeight": 1.5,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontWeight": "600",
+  "terminal.integrated.gpuAcceleration": "on",
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "One Dark Pro Night Flat",
+  "todo-tree.highlights.enabled": false,
+  "todohighlight.isEnable": true,
+  "todohighlight.isCaseSensitive": true,
+  "todo-tree.general.tags": [
+    "BUG",
+    "FIXME",
+    "TODO",
+    "[ ]",
+    "[x]",
+    "NOTE",
+    "HACK",
+    "REFACTOR",
+    "OPTIMIZE",
+    "SECURITY"
+  ],
+  "todo-tree.highlights.customHighlight": {
+    "BUG": {
+      "icon": "bug",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#E53935", // Đỏ tươi (lỗi) - (cần sửa gấp)
+      "iconColour": "#E53935"
+    },
+    "TODO": {
+      "icon": "checklist",
+      "type": "text",
+      "foreground": "#000000",
+      "background": "#FFEB3B", // Vàng (việc cần làm)
+      "iconColour": "#FDD835"
+    },
+    "[ ]": {
+      "icon": "circle",
+      "type": "text",
+      "foreground": "#000000",
+      "background": "#29B6F6", // Xanh dương (task chưa xong)
+      "iconColour": "#039BE5"
+    },
+    "[x]": {
+      "icon": "check",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#43A047", // Xanh lá (task đã xong)
+      "iconColour": "#2E7D32"
+    },
+    "NOTE": {
+      "icon": "note",
+      "type": "text",
+      "foreground": "#000000",
+      "background": "#BDBDBD", // Xám nhạt (ghi chú)
+      "iconColour": "#757575"
+    },
+    "HACK": {
+      "icon": "tools",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#FB8C00", // Cam Chạy được nhưng cần giải pháp tối ưu hơn
+      "iconColour": "#FB8C00"
+    },
+    "REFACTOR": {
+      "icon": "tools",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#6D4C41", // Nâu (Cần tối ưu code cho dễ bảo trì)
+      "iconColour": "#6D4C41"
+    },
+    "OPTIMIZE": {
+      "icon": "rocket",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#3949AB", // Xanh tím (Cần tối ưu hiệu năng)
+      "iconColour": "#3949AB"
+    },
+    "SECURITY": {
+      "icon": "shield",
+      "type": "text",
+      "foreground": "#FFFFFF",
+      "background": "#D81B60", // Hồng đậm (Cần tối ưu bảo mật)
+      "iconColour": "#D81B60"
+    }
+  },
+  "todohighlight.maxFilesForSearch": 5120,
+  "todohighlight.toggleURI": false,
+  "todohighlight.keywords": [
+    {
+      "text": "BUG",
+      "color": "#FFFFFF",
+      "backgroundColor": "#E53935",
+      "overviewRulerColor": "#E53935"
+    },
+    {
+      "text": "FIXME",
+      "color": "red",
+      "backgroundColor": "#ffab00",
+      "overviewRulerColor": "#ffab00"
+    },
+    {
+      "text": "TODO",
+      "color": "#000000",
+      "backgroundColor": "#FFEB3B",
+      "overviewRulerColor": "#FDD835"
+    },
+    {
+      "text": "[ ]",
+      "color": "#000000",
+      "backgroundColor": "#29B6F6",
+      "overviewRulerColor": "#039BE5"
+    },
+    {
+      "text": "[x]",
+      "color": "#FFFFFF",
+      "backgroundColor": "#43A047"
+    },
+    {
+      "text": "NOTE",
+      "color": "#000000",
+      "backgroundColor": "#BDBDBD",
+      "overviewRulerColor": "#757575"
+    },
+    {
+      "text": "HACK",
+      "color": "#FFFFFF",
+      "backgroundColor": "#FB8C00",
+      "overviewRulerColor": "#FB8C00"
+    },
+    {
+      "text": "REFACTOR",
+      "color": "#FFFFFF",
+      "backgroundColor": "#6D4C41",
+      "overviewRulerColor": "#6D4C41"
+    },
+    {
+      "text": "OPTIMIZE",
+      "color": "#FFFFFF",
+      "backgroundColor": "#3949AB",
+      "overviewRulerColor": "#3949AB"
+    },
+    {
+      "text": "SECURITY",
+      "color": "#FFFFFF",
+      "backgroundColor": "#D81B60",
+      "overviewRulerColor": "#D81B60"
+    }
+  ],
+  "todohighlight.include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.html",
+    "**/*.php",
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "todohighlight.exclude": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.vscode/**",
+    "**/.github/**",
+    "**/_output/**",
+    "**/*.min.*",
+    "**/*.map",
+    "**/.next/**"
+  ],
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.excludedLanguages": ["plaintext"],
+  "indentRainbow.updateDelay": 300,
+  "indentRainbow.lightIndicatorStyleLineWidth": 1,
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.3)",
+    "rgba(127,255,127,0.3)",
+    "rgba(255,127,255,0.3)",
+    "rgba(79,236,236,0.3)"
+  ],
+  //=========================CONFIGURATION=========================
+  "extensions.verifySignature": false,
+  "hediet.vscode-drawio.resizeImages": null,
+  "explorer.confirmDelete": false,
+  "terminal.integrated.env.windows": {},
+  "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+  "terminal.integrated.env.osx": {},
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "extensions.ignoreRecommendations": true,
+  "explorer.confirmDragAndDrop": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "php.validate.enable": true,
+  "git.openRepositoryInParentFolders": "never",
+  "terminal.integrated.suggest.enabled": true,
+  "files.exclude": {
+    ".next": true
+  },
+  "git.autofetch": true,
+  "code-runner.runInTerminal": true,
+  "workbench.startupEditor": "none",
+  "animations.Enabled": true,
+  "window.commandCenter": false,
+  "editor.minimap.enabled": false,
+  "workbench.iconTheme": "symbols",
+  "files.associations": {
+    "*.dbclient-js": "javascript",
+    ".env*": "dotenv",
+    "*.css": "tailwindcss"
+  },
+  "editor.tokenColorCustomizations": {
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "textMateRules": [
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
+  },
+  "dotenv.enableAutocloaking": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "window.restoreWindows": "none",
+  "remote.portsAttributes": {
+    "3010": {
+      "protocol": "http"
+    }
+  },
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.statusBar.visible": false,
+  "security.allowedUNCHosts": ["wsl.localhost"],
+  "git.suggestSmartCommit": false,
+  "explorer.confirmPasteNative": false,
+  "database-client.autoSync": true,
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "chat.agent.maxRequests": 50,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "chat.editing.confirmEditRequestRemoval": false,
+  "projectManager.git.baseFolders": ["/home/billarch/Github"],
+  "chat.mcp.gallery.enabled": true,
+  "githubPullRequests.createOnPublishBranch": "never",
+  "git.ignoreRebaseWarning": true,
+  "githubPullRequests.pullBranch": "never",
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    "/tmp/postman-collections-post-response.instructions.md": true,
+    "/tmp/postman-collections-pre-request.instructions.md": true,
+    "/tmp/postman-folder-post-response.instructions.md": true,
+    "/tmp/postman-folder-pre-request.instructions.md": true,
+    "/tmp/postman-http-request-post-response.instructions.md": true,
+    "/tmp/postman-http-request-pre-request.instructions.md": true
+  },
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.svg": "default"
+  }
+}

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setfont cyr-sun16
-clear                                                                                                                             
+clear
 echo """
                             ▄▀▄     ▄▀▄           ▄▄▄▄▄
                            ▄█░░▀▀▀▀▀░░█▄         █░▄▄░░█
@@ -16,6 +16,19 @@ echo """
 """
 echo
 echo "Starting pre-install..." && sleep 2
+
+
+##==> Initializing git submodules
+#######################################################
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "Initializing git submodules..."
+    git submodule update --init --recursive
+else
+    echo "Error: This directory is not a git repository. Please clone the project using git clone."
+    exit 1
+fi
+#######################################################
+
 
 ##==> Installing basic dependencies for pacman
 #######################################################
@@ -36,8 +49,6 @@ declare -a packages=(
 	"psutil"
 	"gputil"
 	"pyamdgpuinfo"
-	"pyyaml"
-	"pillow"
 	"colorama"
 )
 

@@ -1,30 +1,244 @@
-#
-# ~/.bashrc
-#
-
-# Export shared environment variables
-#########################################
-function shenv() { export "$1=$2"; }
-
-# Load environment variables from .env file
+#####################################
+##==> Variables
+#####################################
+function shenv; set -gx $argv; end
 source ~/.env
-#########################################
 
-# Aliases
-#########################################
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-#########################################
+#####################################
+##==> Aliases
+#####################################
+# Windows Development Aliases
+alias github="cd ~/Github"
 
-# Pyenv
-#########################################
-if command -v pyenv 1>/dev/null 2>&1; then
-   eval "$(pyenv init -)" 
-fi
-#########################################
+# Github alias
+alias python="python3"
 
-# Prompt settings
-set PS1='[\u@\h \W]\$ '
+# Quick Navigation
+alias home="cd ~"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+# File Operations
+alias ll="ls -la"
+alias la="ls -la"
+alias l="ls -l"
+alias cls="clear"
+
+# Git Shortcuts
+alias gs="git status"
+alias ga="git add"
+alias gaa="git add ."
+alias gc="git commit"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gl="git pull"
+alias gco="git checkout"
+alias gb="git branch"
+alias gd="git diff"
+alias glog="git log --oneline --graph --decorate"
+
+# Node.js/NPM Shortcuts
+alias ni="npm install"
+alias ns="npm start"
+alias nt="npm test"
+alias nb="npm run build"
+alias nd="npm run dev"
+alias nrd="npm run dev"
+alias nrs="npm run start"
+alias nrt="npm run test"
+alias nrb="npm run build"
+
+# Yarn Shortcuts
+alias ys="yarn start"
+alias yi="yarn install"
+alias yt="yarn test"
+alias yb="yarn build"
+alias yd="yarn dev"
+
+# System Utils
+alias reload="source ~/.config/fish/config.fish"
+alias editrc="code ~/.config/fish/config.fish"
+alias editfish="code ~/.config/fish/config.fish"
+
+# Docker Shortcuts
+alias dc="docker-compose" 
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
+alias dcb="docker-compose build"
+alias dps="docker ps"
+alias di="docker images"
+
+# IDE/Editor Shortcuts
+alias code="code ."
+alias cursor="cursor ."
+alias anti="antigravity ."
+alias zed="zed ."
+alias codeh="code ~"
+alias cursorh="cursor ~"
+alias antih="antigravity ~"
+alias zedh="zed ~"
+
+#####################################
+##==> Custom Functions
+#####################################
+function wget
+    command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
+end
+
+function nvidia-settings
+    mkdir -p $XDG_CONFIG_HOME/nvidia/
+    command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
+end
+
+function y
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
+
+function wget
+    command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
+end
+
+function nvidia-settings
+    mkdir -p $XDG_CONFIG_HOME/nvidia/
+    command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
+end
+
+function mkcd
+    mkdir -p "$argv[1]"; and cd "$argv[1]"
+end
+
+function ginit
+    git init
+    git add .
+    git commit -m "feat: initial commit"
+end
+
+function gclone
+    git clone "git@github.com:phamhuulocforwork/$argv[1].git"
+    if test (count $argv) -ge 2
+        cd "$argv[2]"
+    else
+        cd "$argv[1]"
+    end
+end
+
+function mclone
+    set file "$argv[1]"
+
+    if test -z "$file"; or not test -f "$file"
+        echo "Usage: mclone <file_with_repo_urls>"
+        return 1
+    end
+
+    set repos
+    while read -l line
+        set line (echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+        if test -z "$line"; or string match -r '^#' "$line"
+            continue
+        end
+        set repos $repos "$line"
+    end < "$file"
+
+    set n (count $repos)
+    if test $n -eq 0
+        echo "File does not have a valid repo"
+        return 1
+    end
+
+    echo "Cloning $n repos in parallel..."
+
+    if command -v parallel >/dev/null 2>&1
+        printf "%s\n" $repos | parallel -j "$n" 'GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone {}'
+    else
+        for repo in $repos
+            env GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new" git clone $repo &
+        end
+        wait
+    end
+end
+
+function clone
+    git clone "$argv[1]"
+    if test (count $argv) -ge 2
+        cd "$argv[2]"
+    else
+        cd (basename "$argv[1]" .git)
+    end
+end
+
+function system-clean
+    echo "Cleaning temp files in /tmp and /var/tmp..."
+    sudo rm -rf /tmp/* /var/tmp/*
+
+    echo "Cleaning apt cache..."
+    if command -v apt-get >/dev/null 2>&1
+        sudo apt-get clean -y
+        sudo apt-get autoclean -y
+        sudo apt-get autoremove -y
+    end
+
+    echo "Cleaning pip, npm, and user cache..."
+    rm -rf ~/.cache/pip ~/.npm ~/.cache/* ~/.local/share/*Trash*/files/*
+
+    echo "Cleaning old logs..."
+    sudo journalctl --vacuum-time=7d
+    sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
+
+    echo "Done!"
+end
+
+function venv-clean
+    echo "Deleting 'venv' folders..."
+    find . -type d -name "venv" -exec rm -rf {} +
+    echo "Done"
+end
+
+function npkill
+    echo "Deleting 'node_modules' ..."
+    find . -type d -name "node_modules" -exec rm -rf {} +
+    echo "Done"
+end
+
+function ssh-setup
+    echo -e "Generating SSH key..."
+
+    set SSH_KEY "$HOME/.ssh/id_ed25519"
+    if test ! -f "$SSH_KEY"
+        mkdir -p "$HOME/.ssh"
+        ssh-keygen -t ed25519 -C "phamhuulocforwork@gmail.com" -f "$SSH_KEY" -N ""
+        echo -e "SSH key generated at $SSH_KEY "
+    else
+        echo -e "SSH key already exists at $SSH_KEY "
+    end
+
+    if command -v wl-copy >/dev/null 2>&1
+        cat "$SSH_KEY.pub" | wl-copy
+        echo -e "SSH public key copied to clipboard (Wayland) "
+    else if command -v xclip >/dev/null 2>&1
+        cat "$SSH_KEY.pub" | xclip -selection clipboard
+        echo -e "SSH public key copied to clipboard (X11) "
+    else
+        echo -e "Neither wl-copy nor xclip found. Please install one to copy SSH key to clipboard. "
+        echo -e "You can still get your key with: cat $SSH_KEY.pub "
+    end
+end
+
+#####################################
+##==> Shell Customization
+#####################################
+starship init fish | source
+set fish_greeting
+
+#####################################
+##==> Fun Stuff
+#####################################
+if test "$PWD" = "$HOME"
+    fastfetch
+    cd ~/Github
+end

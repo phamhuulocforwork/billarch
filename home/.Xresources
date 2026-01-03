@@ -10,46 +10,46 @@ Xft.dpi:   100
 Xcursor.theme: Bibata-Modern-Classic
 Xcursor.size: 20
 
-st.font:         UbuntuMono Nerd Font:style:medium:pixelsize=20
+st.font:         JetBrainsMono Nerd Font:style:medium:pixelsize=20
 
 ! window border inner
 st.opacity: 255
 st.borderpx: 10
 
-! One Dark Pro
+! Catppuccin Mocha
 ! Special
-*.foreground:   #abb2bf
-*.background:   #282c34
-*.cursorColor:  #abb2bf
+*.foreground:   #cdd6f4
+*.background:   #1e1e2e
+*.cursorColor:  #f5e0dc
 
 ! Black
-*.color0:       #3f4451
-*.color8:       #4f5666
+*.color0:       #11111b
+*.color8:       #6c7086
 
 ! Red
-*.color1:       #e05561
-*.color9:       #ff616e
+*.color1:       #f38ba8
+*.color9:       #eba0ac
 
 ! Green
-*.color2:       #8cc265
-*.color10:      #a5e075
+*.color2:       #a6e3a1
+*.color10:      #94e2d5
 
 ! Yellow
-*.color3:       #d18f52
-*.color11:      #f0a45d
+*.color3:       #f9e2af
+*.color11:      #fab387
 
 ! Blue
-*.color4:       #4aa5f0
-*.color12:      #4dc4ff
+*.color4:       #89b4fa
+*.color12:      #74c7ec
 
-! Purple
-*.color5:       #c162de
-*.color13:      #de73ff
+! Magenta
+*.color5:       #cba6f7
+*.color13:      #b4befe
 
 ! Cyan
-*.color6:       #42b3c2
-*.color14:      #4cd1e0
+*.color6:       #89dceb
+*.color14:      #f5c2e7
 
 ! White
-*.color7:       #e6e6e6
-*.color15:      #d7dae0
+*.color7:       #a6adc8
+*.color15:      #f5e0dc
