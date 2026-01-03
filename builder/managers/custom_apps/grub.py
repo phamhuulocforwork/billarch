@@ -6,7 +6,7 @@ from pathlib import Path
 
 from loguru import logger
 try:
-    from Builder.utils.grub_config import GrubConfigEditor
+    from builder.utils.grub_config import GrubConfigEditor
 except ImportError:
     from utils.grub_config import GrubConfigEditor
 

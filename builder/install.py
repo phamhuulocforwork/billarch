@@ -29,7 +29,7 @@ class Builder:
         self.build_options: BuildOptions = Question.get_answers()
         logger.info(f"User Responses to Questions: {self.build_options}")
 
-        if self._check_existing_installation():;
+        if self._check_existing_installation():
             logger.warning("Billarch is already installed for this user!")
             if not inquirer.confirm("Continue anyway? This will update the installation."):
                 return

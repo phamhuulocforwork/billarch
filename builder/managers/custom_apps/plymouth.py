@@ -7,8 +7,8 @@ from typing import List, Optional
 
 from loguru import logger
 try:
-    from Builder.utils.grub_config import GrubConfigEditor
-    from Builder.utils.mkinitcpio_config import MkinitcpioConfigEditor
+    from builder.utils.grub_config import GrubConfigEditor
+    from builder.utils.mkinitcpio_config import MkinitcpioConfigEditor
 except ImportError:
     from utils.grub_config import GrubConfigEditor
     from utils.mkinitcpio_config import MkinitcpioConfigEditor
