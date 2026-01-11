@@ -4,7 +4,6 @@
 [submodule "misc/sddm_theme"]
 	path = misc/sddm_theme
 	url = https://github.com/phamhuulocforwork/sddm-theme
-	# FIXME: Update URL
 [submodule "misc/plymouth_theme"]
 	path = misc/plymouth_theme
 	url = https://github.com/phamhuulocforwork/plymouth-theme

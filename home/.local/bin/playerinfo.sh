@@ -36,8 +36,8 @@ get_metadata() {
 
 get_source_info() {
     trackid=$(get_metadata "mpris:trackid")
-    if [[ "$trackid" == *"firefox"* ]]; then
-        echo -e "Firefox 󰈹"
+    if [[ "$trackid" == *"edge"* ]]; then
+        echo -e "Edge 󰈹"
     elif [[ "$trackid" == *"spotify"* ]]; then
         echo -e "Spotify "
     elif [[ "$trackid" == *"chromium"* ]]; then

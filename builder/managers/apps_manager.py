@@ -1,4 +1,3 @@
-from .custom_apps.firefox import FirefoxConfigurer
 from .custom_apps.grub import GrubConfigurer
 from .custom_apps.pawlette import PawletteConfigurer
 from .custom_apps.plymouth import PlymouthConfigurer
@@ -19,22 +18,6 @@ class AppsManager:
     @staticmethod
     def configure_code() -> None:
         VSCodeConfigurer().setup()
-
-    @staticmethod
-    def configure_firefox(
-        darkreader: bool,
-        ublock: bool,
-        twp: bool,
-        unpaywall: bool,
-        vot: bool,
-    ) -> None:
-        FirefoxConfigurer(
-            darkreader=darkreader,
-            ublock=ublock,
-            twp=twp,
-            unpaywall=unpaywall,
-            vot=vot,
-        ).setup()
 
     @staticmethod
     def configure_grub() -> None:

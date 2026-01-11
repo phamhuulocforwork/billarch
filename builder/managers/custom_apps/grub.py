@@ -15,7 +15,7 @@ from .base import AppConfigurer
 
 class GrubConfigurer(AppConfigurer):
     def __init__(self):
-        self.theme_path = "/boot/grub/themes/meowrch"
+        self.theme_path = "/boot/grub/themes/billarch"
         self.theme_src = Path("./misc/grub_theme")
         self.grub_editor = GrubConfigEditor()
 

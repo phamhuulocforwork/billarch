@@ -11,7 +11,7 @@ from .base import AppConfigurer
 class VSCodeConfigurer(AppConfigurer):
     def setup(self) -> None:
         self._install_vscode()
-        self._install_theme_extension()
+        # self._install_theme_extension()
 
     def _install_vscode(self) -> None:
         try:
@@ -32,7 +32,7 @@ class VSCodeConfigurer(AppConfigurer):
                 [
                     "code",
                     "--install-extension",
-                    str(Path("./misc/meowrch-theme-1.1.1.vsix")),
+                    str(Path("./misc/meowrch-theme-1.1.1.vsix")), # FIXME:
                 ],
                 check=True,
             )

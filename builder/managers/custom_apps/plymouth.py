@@ -15,16 +15,14 @@ except ImportError:
 
 class PlymouthConfigurer:
     def __init__(self):
-        self.theme_name = "meowrch"
+        self.theme_name = "billarch"
         self.services_src = Path("./misc/services")
         self.theme_src = Path("./misc/plymouth_theme")
         self.theme_dest = Path("/usr/share/plymouth/themes/")
         
-        # Инициализируем редакторы конфигурации
         self.grub_editor = GrubConfigEditor()
         self.mkinitcpio_editor = MkinitcpioConfigEditor()
         
-        # Требуемые параметры GRUB
         self.required_grub_params = {
             "quiet",
             "loglevel=3",
@@ -98,7 +96,7 @@ class PlymouthConfigurer:
             return
         changes_made = self.grub_editor.add_cmdline_params(
             self.required_grub_params, 
-            update_grub=False  # Не запускаем update-grub пока, сделаем в конце
+            update_grub=False
         )
         if changes_made:
             logger.success("GRUB settings configured successfully!")

@@ -26,7 +26,7 @@ BASE = Packages(
 
 			##==> GUI 
 			###########################################
-			"sddm", "plymouth", "firefox", "kitty", "blueman", "file-roller", "nemo", 
+			"sddm", "plymouth", "kitty", "blueman", "file-roller", "nemo", 
             "nemo-fileroller", "gvfs", "ffmpegthumbnailer", "imagemagick", 
             "vlc", "loupe", "qt5ct", "qt6ct", "qt5-graphicaleffects", 
             "qt5-svg", "qt5-multimedia", "qt5-quickcontrols2", "gst-plugins-good", 
@@ -61,6 +61,7 @@ BASE = Packages(
 			##==> GUI
             ###########################################
             "visual-studio-code-bin", "nemo-tags", "hotkeyhub-bin", "fcitx5-bamboo",
+            "microsoft-edge-stable",
             
             ##==> Customization: Themes, icons and cursors
             ###########################################

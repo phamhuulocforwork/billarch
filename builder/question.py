@@ -83,13 +83,6 @@ class Question:
     @staticmethod
     def get_answers():
         answers: Question.answers_type = {}
-        firefox_choices = [
-            f"Dark Reader | {Fore.YELLOW}Changes light themes to dark themes on all sites",
-            f"uBlock Origin | {Fore.YELLOW}Blocks ads",
-            f"TWP | {Fore.YELLOW}Translator for text and whole pages",
-            f"Unpaywall | {Fore.YELLOW}View paid article content",
-            f"Voice Over Translation | {Fore.YELLOW}Adds voice translation for videos from YaBrowser."
-        ]
 
         quests: List[Union[QuestionCheckbox, QuestionList]] = [
             QuestionList(
@@ -118,13 +111,6 @@ class Question:
                 message="4) Use Chaotic AUR for faster AUR package installation?",
                 choices=["Yes", "No"],
                 default="Yes",
-                carousel=True,
-            ),
-            QuestionCheckbox(
-                name="ff_plugins",
-                message="5) Would you like to add useful plugins for firefox?",
-                choices=firefox_choices,
-                default=firefox_choices,
                 carousel=True,
             ),
             QuestionList(
