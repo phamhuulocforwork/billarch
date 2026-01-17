@@ -32,7 +32,7 @@ launch_bar() {
     local bar_name="$1"
     # Use service type for auto-restart capability when UWSM is active
     # nohup is needed here because we want the bar to survive toggle-bar.sh exit
-    if [[ "$bar_name" == "mewline" ]]; then
+    if [[ "$bar_name" == "billpanel" ]]; then
         nohup "${XDG_BIN_HOME:-$HOME/bin}/uwsm-launcher.sh" -t service -s s "$bar_name" >/dev/null 2>&1 &
     else
         nohup "${XDG_BIN_HOME:-$HOME/bin}/uwsm-launcher.sh" -t service -s s "$bar_name" >/dev/null 2>&1 &
@@ -41,7 +41,7 @@ launch_bar() {
 }
 
 handle_wayland() {
-    [ ! -f "$FLAG_FILE" ] && echo "mewline" > "$FLAG_FILE"
+    [ ! -f "$FLAG_FILE" ] && echo "billpanel" > "$FLAG_FILE"
     current_bar=$(cat "$FLAG_FILE")
 
     case "$ACTION" in

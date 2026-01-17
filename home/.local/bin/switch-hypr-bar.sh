@@ -12,11 +12,11 @@
 FLAG_FILE="$HOME/.config/hypr/current_bar"
 
 # Initialize the flag file if necessary
-[ ! -f "$FLAG_FILE" ] && echo "mewline" > "$FLAG_FILE"
+[ ! -f "$FLAG_FILE" ] && echo "billpanel" > "$FLAG_FILE"
 
 # Define current and new status bars
 current_bar=$(cat "$FLAG_FILE")
-new_bar=$([ "$current_bar" == "waybar" ] && echo "mewline" || echo "waybar")
+new_bar=$([ "$current_bar" == "waybar" ] && echo "billpanel" || echo "waybar")
 
 # Update the flag file
 echo "$new_bar" > "$FLAG_FILE"

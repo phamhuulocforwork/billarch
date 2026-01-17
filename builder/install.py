@@ -76,7 +76,7 @@ class Builder:
             AppsManager.configure_code()
 
             if self.build_options.install_hyprland:
-                AppsManager.configure_mewline()
+                AppsManager.configure_billpanel()
                 
             AppsManager.configure_pawlette()
 

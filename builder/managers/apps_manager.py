@@ -3,7 +3,7 @@ from .custom_apps.pawlette import PawletteConfigurer
 from .custom_apps.plymouth import PlymouthConfigurer
 from .custom_apps.sddm import SDDMConfigurer
 from .custom_apps.vscode import VSCodeConfigurer
-from .custom_apps.mewline import MewlineConfigurer
+from .custom_apps.billpanel import BillpanelConfigurer
 
 
 class AppsManager:
@@ -28,5 +28,5 @@ class AppsManager:
         PawletteConfigurer().setup()
 
     @staticmethod
-    def configure_mewline() -> None:
-        MewlineConfigurer().setup()
+    def configure_billpanel() -> None:
+        BillpanelConfigurer().setup()

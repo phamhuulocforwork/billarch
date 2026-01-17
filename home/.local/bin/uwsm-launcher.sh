@@ -66,8 +66,8 @@ OPTIONS:
 
 EXAMPLES:
     $0 dunst                                    # Launch dunst
-    $0 -t service -s s mewline                  # Launch with specific uwsm options
-    $0 --system-mode mewline                    # Launch with system service environment
+    $0 -t service -s s billpanel                # Launch with specific uwsm options
+    $0 --system-mode billpanel                  # Launch with system service environment
     $0 --system-mode --delay 0.5 blueman-tray  # System mode with custom delay
     $0 sh /path/to/script.sh --arg              # Launch script with arguments
 

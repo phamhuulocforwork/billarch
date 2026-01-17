@@ -20,8 +20,8 @@ BASE = Packages(
 			##==> CLI-Tools
 			###########################################
             "jq", "fastfetch", "lsd", "bat", "micro", "sudo",
-            "btop", "yazi", "starship", "openssh", "sshfs", 
-            "wget", "neovim", "tmux", "ffmpeg", "cliphist",
+            "btop", "starship", "openssh", "sshfs", 
+            "wget", "tmux", "ffmpeg", "cliphist",
             "tree", "bash-completion",
 
 			##==> GUI 
@@ -78,7 +78,7 @@ BASE = Packages(
 		],
 		bspwm_packages=["xkb-switch", "i3lock-color"],
 		hyprland_packages=[
-			"hyprprop", "grimblast-git", "mewline"
+			"hyprprop", "grimblast-git", "billpanel"
 		]
 	)
 )
