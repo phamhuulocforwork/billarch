@@ -16,7 +16,7 @@ WALLPAPERS_DIRS=(
     "${DATA_HOME}/pawlette/theme_wallpapers"
 )
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/billpanel/thumbs"
-RANDOM_ICON="${DATA_HOME}/meowrch/assets/random.png"
+RANDOM_ICON="${DATA_HOME}/billarch/assets/random.png"
 ROFI_THEME="$HOME/.config/rofi/selecting.rasi"
 CACHE_MAPPING="$CACHE_DIR/cache_mapping.json"
 LOCK_FILE="$CACHE_DIR/cache.lock"

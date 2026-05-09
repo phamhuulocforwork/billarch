@@ -1,15 +1,28 @@
 // Config //
 configuration {
-    modi:                        "drun,filebrowser,window,run";
+    modi:                        "drun,filebrowser,window,run,calc";
     show-icons:                  true;
     display-drun:                " ";
     display-run:                 " ";
     display-filebrowser:         " ";
     display-window:              " ";
+    display-calc:                "󱖦 ";
     drun-display-format:         "{name}";
     window-format:               "{w}{t}";
     font:                        "JetBrainsMono Nerd Font 10";
     icon-theme:                  "Tela-circle-dracula";
+    calc {
+        no-bold: false;
+        terse: true;
+        no-history: false;
+        no-persist-history: false;
+        automatic-save-to-history: true;
+        calc-command-history: true;
+        calc-error-color: "Green";
+        calc-command: "notify-send {result}";
+        hint-result: "Res: ";
+        hint-welcome: "Calc";
+    }
 } 
 
 @theme "theme"

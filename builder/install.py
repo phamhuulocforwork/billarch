@@ -1,8 +1,6 @@
-import json
 import os
 import subprocess
 import traceback
-from datetime import datetime
 from pathlib import Path
 
 import inquirer
@@ -18,7 +16,6 @@ from question import Question
 from utils.config_backup import ConfigBackup
 from utils.schemes import BuildOptions, NotInstalledPackages, TerminalShell
 
-
 class Builder:
     not_installed_packages = NotInstalledPackages()
 
@@ -29,9 +26,35 @@ class Builder:
         self.build_options: BuildOptions = Question.get_answers()
         logger.info(f"User Responses to Questions: {self.build_options}")
 
+        if self.build_options.terminal_shell != TerminalShell.ZSH:
+            BASE.pacman.common.remove("zsh")
+            BASE.pacman.common.remove("zsh-syntax-highlighting")
+            BASE.pacman.common.remove("zsh-autosuggestions")
+            BASE.pacman.common.remove("zsh-history-substring-search")
+
+        if self.build_options.terminal_shell != TerminalShell.FISH:
+            BASE.pacman.common.remove("fish")
+
+        if not self.build_options.install_grub:
+            BASE.aur.common.remove("update-grub")
+
+        if not self.build_options.install_plymouth:
+            BASE.pacman.common.remove("plymouth")
+
+        if not self.build_options.install_sddm:
+            BASE.pacman.common.remove("sddm")
+        
+        # If dracut is already installed on the system, avoid installing mkinitcpio
+        if PackageManager.check_package_installed("dracut"):
+            if "mkinitcpio" in BASE.pacman.common:
+                BASE.pacman.common.remove("mkinitcpio")
+                logger.info("Detected dracut; skipping mkinitcpio installation.")
+
         if self._check_existing_installation():
             logger.warning("Billarch is already installed for this user!")
-            if not inquirer.confirm("Continue anyway? This will update the installation."):
+            if not inquirer.confirm(
+                "Continue anyway? This will update the installation."
+            ):
                 return
         
         self._create_installation_marker()
@@ -63,16 +86,24 @@ class Builder:
             if self.build_options.use_chaotic_aur:
                 logger.info("Setting up Chaotic AUR...")
                 ChaoticAurManager.install()
-                
+
             PackageManager.install_aur_helper(self.build_options.aur_helper)
 
             self.packages_installation()
 
             ChdwManager().install()
 
-            AppsManager.configure_grub()
-            AppsManager.configure_sddm()
-            AppsManager.configure_plymouth()
+            if self.build_options.install_grub:
+                AppsManager.configure_grub()
+
+            if self.build_options.install_sddm:
+                AppsManager.configure_sddm()
+
+            if self.build_options.install_plymouth:
+                AppsManager.configure_plymouth(
+                    allow_grub_config=self.build_options.install_grub
+                )
+
             AppsManager.configure_code()
 
             if self.build_options.install_hyprland:
@@ -83,7 +114,7 @@ class Builder:
             self.daemons_setting()
             PostInstallation.apply(self.build_options)
 
-            self._write_installation_metadata("3.0.0")
+            self._remove_installation_marker()
 
             logger.warning(
                 "The script was unable to automatically install these packages."
@@ -92,27 +123,22 @@ class Builder:
             logger.warning("Pacman: " + ", ".join(self.not_installed_packages.pacman))
             logger.warning("Aur: " + ", ".join(self.not_installed_packages.aur))
             logger.success(
-                "Meowrch has been successfully installed! Restart your PC to apply the changes."
+                "Billarch has been successfully installed! Restart your PC to apply the changes."
             )
         except BaseException:
             logger.error(f"Installation failed: {traceback.format_exc()}")
             self._cleanup_failed_installation()
             raise
 
-        is_reboot = inquirer.confirm("Do you want to reboot?")
-        if is_reboot:
-            subprocess.run("sudo reboot", shell=True)
 
     def packages_installation(self) -> None:
         logger.info("Starting the package installation process")
         pacman, aur = self._collect_selected_packages()
 
-        # Устанавливаем pacman пакеты
         self.not_installed_packages.pacman.extend(
             PackageManager.install_packages(pacman)
         )
 
-        # Устанавливаем aur пакеты
         self.not_installed_packages.aur.extend(
             PackageManager.install_packages(aur, aur=self.build_options.aur_helper)
         )
@@ -140,11 +166,6 @@ class Builder:
                 pacman.extend(getattr(BASE.pacman, f"{wm}_packages"))
                 aur.extend(getattr(BASE.aur, f"{wm}_packages"))
 
-        if self.build_options.terminal_shell == TerminalShell.ZSH:
-            pacman.extend(["zsh", "zsh-syntax-highlighting", "zsh-autosuggestions", "zsh-history-substring-search"])
-        else:
-            pacman.append("fish")
-
         # Deduplicate while preserving order
         pacman = list(dict.fromkeys(pacman))
         aur = list(dict.fromkeys(aur))
@@ -154,16 +175,19 @@ class Builder:
         logger.info("The daemons are starting to run...")
 
         daemons = {
-            "enable": ["NetworkManager", "bluetooth.service", "sddm.service"],
-            "start": ["bluetooth.service"]
+            "enable": ["NetworkManager", "bluetooth.service"],
+            "start": ["bluetooth.service"],
         }
+
+        if self.build_options.install_sddm:
+            daemons["enable"].append("sddm.service")
 
         user_daemons = {
             "enable": ["battery-monitor.timer"],
-            "start": ["battery-monitor.timer"]
+            "start": ["battery-monitor.timer"],
         }
 
-        error_msg = "Daemon \"{name}\" {action} error: {err}"
+        error_msg = 'Daemon "{name}" {action} error: {err}'
 
         for action, dmns in daemons.items():
             for d in dmns:
@@ -172,7 +196,11 @@ class Builder:
                 except subprocess.CalledProcessError as e:
                     logger.error(error_msg.format(action=action, name=d, err=e.stderr))
                 except Exception:
-                    logger.error(error_msg.format(action=action, name=d, err=traceback.format_exc()))
+                    logger.error(
+                        error_msg.format(
+                            action=action, name=d, err=traceback.format_exc()
+                        )
+                    )
 
         for action, dmns in user_daemons.items():
             for d in dmns:
@@ -181,76 +209,44 @@ class Builder:
                 except subprocess.CalledProcessError as e:
                     logger.error(error_msg.format(action=action, name=d, err=e.stderr))
                 except Exception:
-                    logger.error(error_msg.format(action=action, name=d, err=traceback.format_exc()))
+                    logger.error(
+                        error_msg.format(
+                            action=action, name=d, err=traceback.format_exc()
+                        )
+                    )
 
         logger.success("The setting of the daemons is complete!")
 
-    def _write_installation_metadata(self, version: str) -> None:        
-        metadata = {
-            "version": version,
-            "installed_at": datetime.now().isoformat(),
-            "user": os.getenv("USER"),
-            "install_type": "full",
-            "dotfiles_applied": True
-        }
-        
-        base_dir = Path(f"/usr/local/share/meowrch/users/{os.getenv('USER')}")
-        subprocess.run(["sudo", "mkdir", "-p", str(base_dir)], check=True)
-        
-        # Записываем версию
-        subprocess.run(
-            ["sudo", "tee", str(base_dir / "version")],
-            input=version.encode(),
-            stdout=subprocess.DEVNULL,
-            check=True
-        )
-        
-        # Записываем метаданные
-        subprocess.run(
-            ["sudo", "tee", str(base_dir / ".installed")],
-            input=json.dumps(metadata, indent=2).encode(),
-            stdout=subprocess.DEVNULL,
-            check=True
-        )
-        
-        # Устанавливаем права: только чтение для пользователя
-        subprocess.run(["sudo", "chmod", "444", str(base_dir / "version")], check=True)
-        subprocess.run(["sudo", "chmod", "444", str(base_dir / ".installed")], check=True)
-        
-        # Удаляем временный маркер установки
-        subprocess.run(
-            ["sudo", "rm", "-f", str(base_dir / ".installing")],
-            check=False
-        )
-    
-        logger.success(f"Version metadata protected: {version}")
+    def _remove_installation_marker(self) -> None:
+        base_dir = Path(f"/usr/local/share/billarch/users/{os.getenv('USER')}")
+        subprocess.run(["sudo", "rm", "-f", str(base_dir / ".installing")], check=False)
 
     def _check_existing_installation(self) -> bool:
-        version_file = Path(f"/usr/local/share/meowrch/users/{os.getenv('USER')}/version")
+        version_file = Path(
+            f"/usr/local/share/billarch/users/{os.getenv('USER')}/version"
+        )
         return version_file.exists()
-    
+
     def _create_installation_marker(self) -> None:
-        base_dir = Path(f"/usr/local/share/meowrch/users/{os.getenv('USER')}")
+        base_dir = Path(f"/usr/local/share/billarch/users/{os.getenv('USER')}")
         subprocess.run(["sudo", "mkdir", "-p", str(base_dir)], check=True)
-        
+
         # Временный файл для отслеживания процесса
         subprocess.run(
             ["sudo", "tee", str(base_dir / ".installing")],
             input=b"installation_in_progress",
             stdout=subprocess.DEVNULL,
-            check=True
+            check=True,
         )
-    
+
     def _cleanup_failed_installation(self) -> None:
-        base_dir = Path(f"/usr/local/share/meowrch/users/{os.getenv('USER')}")
-        
+        base_dir = Path(f"/usr/local/share/billarch/users/{os.getenv('USER')}")
+
         # Удаляем временный маркер
-        subprocess.run(
-            ["sudo", "rm", "-f", str(base_dir / ".installing")],
-            check=False
-        )
-        
+        subprocess.run(["sudo", "rm", "-f", str(base_dir / ".installing")], check=False)
+
         logger.warning("Installation markers cleaned up due to failure")
+
 
 if __name__ == "__main__":
     logger.add(

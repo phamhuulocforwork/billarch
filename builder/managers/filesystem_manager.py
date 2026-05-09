@@ -64,10 +64,10 @@ class FileSystemManager:
             ".gnome2",
             ".local/share/nemo",
             ".bashrc",
-            ".env",
             ".Xresources",
             ".xinitrc",
             ".icons/default/index.theme",
+            ".zshenv"
         ]
 
         for item in backup_items:
@@ -124,8 +124,8 @@ class FileSystemManager:
             dirs_exist_ok=True,
         )
         shutil.copy(src=Path("./home/.bashrc"), dst=home / ".bashrc")
-        shutil.copy(src=Path("./home/.env"), dst=home / ".env")
         shutil.copy(src=Path("./home/.face.icon"), dst=home / ".face.icon")
+        shutil.copy(src=Path("./home/.zshenv"), dst=home / ".zshenv")
 
         if not exclude_bspwm:
             shutil.copy(src=Path("./home/.Xresources"), dst=home / ".Xresources")

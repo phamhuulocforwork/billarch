@@ -1,9 +1,21 @@
+import subprocess
 import os
 import json
-import psutil
-import GPUtil
+
+try:
+	import psutil
+	import GPUtil
+	import pyamdgpuinfo
+except ImportError:
+	python_packages = ["psutil", "gputil", "pyamdgpuinfo"]
+
+	for p in python_packages:
+		try:
+			subprocess.run(["pip", "install", p, "--break-system-packages"], check=False)
+		except Exception:
+			...
+
 import argparse
-import pyamdgpuinfo
 import configparser
 from os.path import expandvars
 from dataclasses import dataclass
@@ -204,7 +216,7 @@ def set_system_info_config(config_path: str, cpu_mode: str, gpu_mode: str):
 		config.write(configfile)
 
 if __name__ == "__main__":
-	config_path = os.path.expanduser("~/.cache/meowrch/system-info.ini")
+	config_path = os.path.expanduser("~/.cache/billarch/system-info.ini")
 	SESSION_TYPE = (lambda s: s if s != "$XDG_SESSION_TYPE" else None)(expandvars("$XDG_SESSION_TYPE"))
 	cpu_label_mode, gpu_label_mode = get_system_info_config(config_path)
 

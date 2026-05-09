@@ -7,22 +7,34 @@ from typing import List, Optional
 
 from loguru import logger
 try:
-    from builder.utils.grub_config import GrubConfigEditor
-    from builder.utils.mkinitcpio_config import MkinitcpioConfigEditor
+    from Builder.utils.bootloader import BootloaderManager
+    from Builder.utils.grub_config import GrubConfigEditor
+    from Builder.utils.mkinitcpio_config import MkinitcpioConfigEditor
+    from Builder.utils.initramfs import InitramfsManager
 except ImportError:
+    from utils.bootloader import BootloaderManager
     from utils.grub_config import GrubConfigEditor
     from utils.mkinitcpio_config import MkinitcpioConfigEditor
+    from utils.initramfs import InitramfsManager
 
 class PlymouthConfigurer:
-    def __init__(self):
+    def __init__(self, allow_grub_config: bool = True):
         self.theme_name = "billarch"
         self.services_src = Path("./misc/services")
         self.theme_src = Path("./misc/plymouth_theme")
         self.theme_dest = Path("/usr/share/plymouth/themes/")
+        self.allow_grub_config = allow_grub_config
+        self.initramfs_tool: Optional[str] = None
+        self.dracut_conf_dir = Path("/etc/dracut.conf.d")
+        self.dracut_conf_file = self.dracut_conf_dir / "90-plymouth-billarch.conf"
         
+        # Инициализируем редакторы конфигурации
         self.grub_editor = GrubConfigEditor()
         self.mkinitcpio_editor = MkinitcpioConfigEditor()
+        self.bootloader_manager = BootloaderManager()
+        self.initramfs_manager = InitramfsManager()
         
+        # Требуемые параметры GRUB
         self.required_grub_params = {
             "quiet",
             "loglevel=3",
@@ -37,8 +49,15 @@ class PlymouthConfigurer:
         error_msg = "An error occurred during the installation of plymouth: {err}"
         if self._check_plymouth_installed():
             try:
+                self.initramfs_tool = self._detect_initramfs_tool()
+                logger.info(f"Detected initramfs tool: {self.initramfs_tool}")
                 self.update_grub_cmdline()
-                self.update_mkinitcpio_hooks()
+                if self.initramfs_tool == "mkinitcpio":
+                    self.update_mkinitcpio_hooks()
+                elif self.initramfs_tool == "dracut":
+                    self.update_dracut_config()
+                else:
+                    logger.warning("Unknown initramfs generator; skipping initramfs configuration step.")
                 self.setup_services()
                 self.install_theme()
                 self.run_post_commands()
@@ -67,113 +86,25 @@ class PlymouthConfigurer:
         return True
 
     def _bootloader_type(self) -> str:
-        """Detect the bootloader type: 'grub', 'systemd-boot', or 'unknown'"""
-        try:
-            if shutil.which("bootctl"):
-                try:
-                    subprocess.run(["bootctl", "is-installed"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                    return "systemd-boot"
-                except subprocess.CalledProcessError:
-                    pass
-            if Path("/boot/loader/entries").exists() or Path("/boot/loader/loader.conf").exists():
-                return "systemd-boot"
-        except Exception:
-            pass
-        if Path("/etc/default/grub").exists() or Path("/boot/grub").exists() or shutil.which("grub-mkconfig"):
-            return "grub"
-        return "unknown"
+        """Detect the bootloader type via BootloaderManager."""
+        return self.bootloader_manager.detect_bootloader_type()
+
+    def _detect_initramfs_tool(self) -> str:
+        """Detect the initramfs generator in use via InitramfsManager."""
+        return self.initramfs_manager.detect_tool(self.dracut_conf_dir)
 
     def update_grub_cmdline(self):
-        """Update GRUB_CMDLINE_LINUX_DEFAULT"""
-        logger.info("The process of configuring the settings of GRUB has begun")
-        # Skip if not a GRUB system
-        if self._bootloader_type() != "grub":
-            logger.info("Skipping GRUB configuration: bootloader is not GRUB (likely systemd-boot).")
-            return
-        # Ensure the GRUB config file exists
-        if not Path("/etc/default/grub").exists():
-            logger.warning("Skipping GRUB configuration: /etc/default/grub not found.")
-            return
-        changes_made = self.grub_editor.add_cmdline_params(
-            self.required_grub_params, 
-            update_grub=False
+        """Update GRUB_CMDLINE_LINUX_DEFAULT."""
+        self.bootloader_manager.configure_grub_cmdline(
+            required_grub_params=self.required_grub_params,
+            grub_editor=self.grub_editor,
+            allow_grub_config=self.allow_grub_config,
+            bootloader_type=self._bootloader_type(),
         )
-        if changes_made:
-            logger.success("GRUB settings configured successfully!")
-        else:
-            logger.info("All required GRUB parameters are already configured")
 
     def update_mkinitcpio_hooks(self):
-        """Update hooks with proper plymouth placement using our new utilities"""
-        logger.info("The process of configuring the settings of mkinitcpio has begun")
-        
-        current_hooks = self.mkinitcpio_editor.list_hooks()
-        logger.info(f"Current hooks: {' '.join(current_hooks)}")
-        
-        # Replace udev with systemd if needed
-        if "udev" in current_hooks and "systemd" not in current_hooks:
-            self.mkinitcpio_editor.remove_hook("udev")
-            self.mkinitcpio_editor.add_hook("systemd", "start")
-            logger.info("Replaced udev with systemd")
-        
-        # We guarantee that the “base” hook is always the first one.
-        if "base" in current_hooks:
-            self.mkinitcpio_editor.remove_hook("base")
-            self.mkinitcpio_editor.add_hook("base", "start")
-        else:
-            self.mkinitcpio_editor.add_hook("base", "start")
-            
-        # Check if plymouth already exists
-        if "plymouth" in current_hooks:
-            logger.info("Plymouth hook already exists in configuration")
-            return
-        
-        # Define hooks that should be before plymouth
-        before_plymouth_hooks = {
-            "base", "systemd", "autodetect", "microcode", "modconf", 
-            "kms", "keyboard", "keymap", "consolefont"
-        }
-        
-        # Find the last hook from before_plymouth_hooks
-        last_before_hook = None
-        updated_hooks = self.mkinitcpio_editor.list_hooks()
-        for hook in reversed(updated_hooks):
-            if hook in before_plymouth_hooks:
-                last_before_hook = hook
-                break
-        
-        # Find first encrypt hook to ensure plymouth goes before it
-        first_encrypt_hook = None
-        for hook in updated_hooks:
-            if hook in ("encrypt", "sd-encrypt"):
-                first_encrypt_hook = hook
-                break
-        
-        # Add plymouth with smart positioning
-        if last_before_hook and first_encrypt_hook:
-            # Plymouth after last_before_hook but before first_encrypt_hook
-            self.mkinitcpio_editor.add_hook("plymouth", 
-                                          after_hook=last_before_hook, 
-                                          before_hook=first_encrypt_hook)
-            logger.info(f"Added plymouth after {last_before_hook} and before {first_encrypt_hook}")
-        elif last_before_hook:
-            # Just after last_before_hook
-            self.mkinitcpio_editor.add_hook("plymouth", "after", last_before_hook)
-            logger.info(f"Added plymouth after {last_before_hook}")
-        elif first_encrypt_hook:
-            # Before first_encrypt_hook
-            self.mkinitcpio_editor.add_hook("plymouth", "before", first_encrypt_hook)
-            logger.info(f"Added plymouth before {first_encrypt_hook}")
-        else:
-            # Fallback: add after systemd or at start
-            if "systemd" in updated_hooks:
-                self.mkinitcpio_editor.add_hook("plymouth", "after", "systemd")
-                logger.info("Added plymouth after systemd")
-            else:
-                self.mkinitcpio_editor.add_hook("plymouth", "start")
-                logger.info("Added plymouth at start of hooks list")
-
-        logger.success("mkinitcpio settings configured successfully!")
+        """Update hooks with proper plymouth placement using InitramfsManager."""
+        self.initramfs_manager.configure_mkinitcpio_for_plymouth(self.mkinitcpio_editor)
 
 
     def setup_services(self):
@@ -223,19 +154,24 @@ class PlymouthConfigurer:
         """Run post-installation commands"""
         bootloader = self._bootloader_type()
         logger.info(f"Detected bootloader: {bootloader}")
-
         # Regenerate bootloader configuration when appropriate
-        if bootloader == "grub":
-            if not Path("/boot/grub").exists():
-                logger.warning("Skipping GRUB config generation: /boot/grub directory does not exist.")
-            elif not shutil.which("grub-mkconfig"):
-                logger.warning("Skipping GRUB config generation: grub-mkconfig not found.")
-            else:
-                logger.info("Running grub-mkconfig -o /boot/grub/grub.cfg...")
-                self._run_sudo(["grub-mkconfig", "-o", "/boot/grub/grub.cfg"])
-        else:
-            logger.info("Skipping GRUB config generation: system is not using GRUB.")
+        self.bootloader_manager.regenerate_grub_config(
+            run_sudo=self._run_sudo,
+            allow_grub_config=self.allow_grub_config,
+            bootloader_type=bootloader,
+        )
 
         # Always rebuild initramfs after changes
-        logger.info("Running mkinitcpio -P...")
-        self._run_sudo(["mkinitcpio", "-P"])
+        self.initramfs_manager.rebuild_initramfs(
+            tool=self.initramfs_tool,
+            run_sudo=self._run_sudo,
+            dracut_conf_dir=self.dracut_conf_dir,
+        )
+
+    def update_dracut_config(self):
+        """Configure dracut to include plymouth module."""
+        self.initramfs_manager.configure_dracut_for_plymouth(
+            dracut_conf_dir=self.dracut_conf_dir,
+            dracut_conf_file=self.dracut_conf_file,
+            run_sudo=self._run_sudo,
+        )

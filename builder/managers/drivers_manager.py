@@ -8,8 +8,8 @@ from loguru import logger
 
 class ChdwManager:
     CACHYOS_REPO_URL = "https://mirror.cachyos.org/repo/x86_64/cachyos"
-    LOCAL_REPO_PATH = Path("/var/lib/meowrch/cachyos-local")
-    LOCAL_REPO_NAME = "meowrch-cachyos-local"
+    LOCAL_REPO_PATH = Path("/var/lib/billarch/cachyos-local")
+    LOCAL_REPO_NAME = "billarch-cachyos-local"
     PACMAN_CONF = Path("/etc/pacman.conf")
     REQUIRED_PACKAGES = ["chwd"]
     

@@ -30,11 +30,6 @@
       "keyColor": "red"
     },
     {
-      "type": "packages",
-      "key": "   Packages",
-      "keyColor": "green"
-    },
-    {
       "type": "display",
       "key": "   Display",
       "keyColor": "green"

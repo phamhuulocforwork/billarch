@@ -1,10 +1,4 @@
 #####################################
-##==> Variables
-#####################################
-function shenv() { export $1=$2 }
-source ~/.env
-
-#####################################
 ##==> Aliases
 #####################################
 alias cls="clear"
@@ -70,5 +64,5 @@ pokemon-colorscripts --no-title -s -r 1,3,6
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[[ -f "$HOME/.config/zsh/themes/meowrch.zsh" ]] && \
-    source "$HOME/.config/zsh/themes/meowrch.zsh"
+[[ -f "$HOME/.config/zsh/themes/billarch.zsh" ]] && \
+    source "$HOME/.config/zsh/themes/billarch.zsh"

@@ -3,8 +3,8 @@
 
 set -e
 
-REPO_PATH="/var/lib/meowrch/cachyos-local"
-REPO_NAME="meowrch-cachyos-local"
+REPO_PATH="/var/lib/billarch/cachyos-local"
+REPO_NAME="billarch-cachyos-local"
 CACHYOS_REPO_URL="https://mirror.cachyos.org/repo/x86_64/cachyos"
 
 # Check root privileges

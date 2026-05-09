@@ -1,17 +1,30 @@
 #####################################
-##==> Variables
+##==> Environment
 #####################################
-function shenv; set -gx $argv; end
-source ~/.env
+for line in (/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)
+    set -l parts (string split -m 1 '=' -- $line)
+    if test (count $parts) -eq 2
+        set -l value (string trim -c '"' -- $parts[2])
+        set -gx $parts[1] $value
+    end
+end
 
 #####################################
 ##==> Aliases
 #####################################
 # Windows Development Aliases
 alias github="cd ~/Github"
+alias update-all='sudo pacman -Syu && yay -Sua && flatpak update'
+alias cleanup-update='sudo pacman -Sc && yay -Sc && flatpak uninstall --unused -y'
 
 # Github alias
 alias python="python3"
+
+# Laravel Aliases
+alias art="php artisan"
+alias pas="php artisan serve"
+alias parl="php artisan route:clear"
+alias pajob="php artisan queue:work --daemon"
 
 # Quick Navigation
 alias home="cd ~"
@@ -27,6 +40,7 @@ alias cls="clear"
 
 # Git Shortcuts
 alias gs="git status"
+alias gsp="git stash push"
 alias ga="git add"
 alias gaa="git add ."
 alias gc="git commit"
@@ -34,6 +48,7 @@ alias gcm="git commit -m"
 alias gp="git push"
 alias gl="git pull"
 alias gco="git checkout"
+alias gcp="git cherry-pick"
 alias gb="git branch"
 alias gd="git diff"
 alias glog="git log --oneline --graph --decorate"
@@ -70,6 +85,7 @@ alias dps="docker ps"
 alias di="docker images"
 
 # IDE/Editor Shortcuts
+alias chown-code = "sudo chown -R $(whoami) /opt/visual-studio-code"
 alias code="code ."
 alias cursor="cursor ."
 alias anti="antigravity ."
@@ -82,23 +98,6 @@ alias zedh="zed ~"
 #####################################
 ##==> Custom Functions
 #####################################
-function wget
-    command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
-end
-
-function nvidia-settings
-    mkdir -p $XDG_CONFIG_HOME/nvidia/
-    command nvidia-settings --config="$XDG_CONFIG_HOME/nvidia/settings" $argv
-end
-
-function y
-	set tmp (mktemp -t "yazi-cwd.XXXXXX")
-	yazi $argv --cwd-file="$tmp"
-	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-		builtin cd -- "$cwd"
-	end
-	rm -f -- "$tmp"
-end
 
 function wget
     command wget --hsts-file="$XDG_DATA_HOME/wget-hsts" $argv
@@ -172,27 +171,6 @@ function clone
     end
 end
 
-function system-clean
-    echo "Cleaning temp files in /tmp and /var/tmp..."
-    sudo rm -rf /tmp/* /var/tmp/*
-
-    echo "Cleaning apt cache..."
-    if command -v apt-get >/dev/null 2>&1
-        sudo apt-get clean -y
-        sudo apt-get autoclean -y
-        sudo apt-get autoremove -y
-    end
-
-    echo "Cleaning pip, npm, and user cache..."
-    rm -rf ~/.cache/pip ~/.npm ~/.cache/* ~/.local/share/*Trash*/files/*
-
-    echo "Cleaning old logs..."
-    sudo journalctl --vacuum-time=7d
-    sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
-
-    echo "Done!"
-end
-
 function venv-clean
     echo "Deleting 'venv' folders..."
     find . -type d -name "venv" -exec rm -rf {} +
@@ -200,8 +178,17 @@ function venv-clean
 end
 
 function npkill
-    echo "Deleting 'node_modules' ..."
-    find . -type d -name "node_modules" -exec rm -rf {} +
+    echo "Deleting node_modules, dist, build, .next, .cache, coverage, .turbo, .vite ..."
+    find . -type d \( \
+      -name "node_modules" -o \
+      -name "dist" -o \
+      -name "build" -o \
+      -name ".next" -o \
+      -name ".cache" -o \
+      -name "coverage" -o \
+      -name ".turbo" -o \
+      -name ".vite" \
+    \) -prune -exec rm -rf '{}' + 2>/dev/null
     echo "Done"
 end
 
@@ -229,6 +216,24 @@ function ssh-setup
     end
 end
 
+function anti --wraps=antigravity --description 'alias anti=antigravity'
+    set -l UNIT_NAME "antigravity-"(date +%s)
+    set -l APP_BIN "/usr/bin/antigravity --verbose"
+    set -l TRIGGER "Lifecycle#onWillShutdown - end 'antigravityAnalytics'"
+    set -l ARGV $argv
+
+    begin
+        systemd-run --user --scope --unit="$UNIT_NAME" --property=KillMode=control-group \
+            /bin/bash -c "exec prlimit --core=0 $APP_BIN $argv 2>&1 | systemd-cat --identifier=$UNIT_NAME" & disown
+
+        fish -c "
+            journalctl --user --identifier=$UNIT_NAME --follow | \
+            grep --line-buffered --max-count=1 $TRIGGER >/dev/null 2>&1; and \
+                systemctl --user kill --signal=SIGKILL $UNIT_NAME.scope
+        " & disown
+    end >/dev/null 2>&1
+end
+
 #####################################
 ##==> Shell Customization
 #####################################
@@ -242,3 +247,14 @@ if test "$PWD" = "$HOME"
     fastfetch
     cd ~/Github
 end
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# PAW-THEME-POST-START: billarch
+fish_config theme choose pawlette-billarch
+# PAW-THEME-POST-END: billarch
+
+# opencode
+fish_add_path /home/billarch/.opencode/bin
+
+fish_add_path /home/billarch/.spicetify

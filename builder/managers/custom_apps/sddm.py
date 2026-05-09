@@ -9,7 +9,7 @@ from .base import AppConfigurer
 
 class SDDMConfigurer(AppConfigurer):
     def __init__(self):
-        self.theme_name = "meowrch"
+        self.theme_name = "billarch"
         self.sddm_config_file = "/etc/sddm.conf"
         self.temp_config_path = "/tmp/sddm.conf"
         self.theme_path = f"/usr/share/sddm/themes/{self.theme_name}"

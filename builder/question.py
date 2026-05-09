@@ -29,7 +29,7 @@ class Question:
 
             category_question = inquirer.List(
                 "category",
-                message="7) Select a category of packages and choose the ones you want",
+                message="8) Select a category of packages and choose the ones you want",
                 choices=list(
                     category
                     + f" | {Fore.YELLOW}Selected: {selected_counts[category]}"
@@ -93,22 +93,29 @@ class Question:
                 carousel=True,
             ),
             QuestionCheckbox(
+                name="install_boot_components",
+                message="2) Select the desired boot components ",
+                choices=["grub", "plymouth", "sddm"],
+                default=["grub", "plymouth", "sddm"],
+                carousel=True,
+            ),
+            QuestionCheckbox(
                 name="install_wm",
-                message="2) Which window manager do you want to install?",
+                message="3) Which window manager do you want to install?",
                 choices=["hyprland", "bspwm"],
                 default=["bspwm", "hyprland"],
                 carousel=True,
             ),
             QuestionList(
                 name="aur_helper",
-                message="3) What kind of AUR helper do you want to have?",
+                message="4) What kind of AUR helper do you want to have?",
                 choices=["yay", "paru", "yay-bin"],
                 default="yay-bin",
                 carousel=True,
             ),
             QuestionList(
                 name="use_chaotic_aur",
-                message="4) Use Chaotic AUR for faster AUR package installation?",
+                message="5) Use Chaotic AUR for faster AUR package installation?",
                 choices=["Yes", "No"],
                 default="Yes",
                 carousel=True,
@@ -128,9 +135,6 @@ class Question:
             answers.update(answer)
 
         Question._choose_custom_packages()
-        answers["ff_plugins"] = [
-            i.split(" | ")[0] for i in answers["ff_plugins"]
-        ]
 
         if answers["aur_helper"] == "paru":
             aur_helper = AurHelper.PARU
@@ -150,12 +154,10 @@ class Question:
             make_backup=answers["make_backup"] == "Yes",
             install_bspwm="bspwm" in answers["install_wm"],
             install_hyprland="hyprland" in answers["install_wm"],
+            install_grub="grub" in answers["install_boot_components"],
+            install_plymouth="plymouth" in answers["install_boot_components"],
+            install_sddm="sddm" in answers["install_boot_components"],
             aur_helper=aur_helper,
             use_chaotic_aur=answers["use_chaotic_aur"] == "Yes",
-            ff_darkreader="Dark Reader" in answers["ff_plugins"],
-            ff_ublock="uBlock Origin" in answers["ff_plugins"],
-            ff_twp="TWP" in answers["ff_plugins"],
-            ff_unpaywall="Unpaywall" in answers["ff_plugins"],
-            ff_vot="Voice Over Translation" in answers["ff_plugins"],
             terminal_shell=terminal_shell
         )

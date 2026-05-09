@@ -10,7 +10,7 @@
 # Github: https://github.com/DIMFLIX
 
 # Configuration
-RANDOM_ICON="${XDG_DATA_HOME:-$HOME/.local/share}/meowrch/assets/random.png"
+RANDOM_ICON="${XDG_DATA_HOME:-$HOME/.local/share}/billarch/assets/random.png"
 ROFI_THEME="$HOME/.config/rofi/selecting.rasi"
 
 # Get themes info

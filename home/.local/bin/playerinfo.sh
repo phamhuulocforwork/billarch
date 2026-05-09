@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-THUMB=/tmp/meowrch-mpris
+THUMB=/tmp/billarch-mpris
 STATUS=$(playerctl status 2>/dev/null)
 
 SKELETON_MODE=0

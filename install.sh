@@ -62,4 +62,19 @@ done
 
 ##==> Building the system
 #######################################################
-python builder/install.py
+if python builder/install.py; then
+    VERSION=$(cat VERSION)
+    VERSION_DIR="/usr/local/share/billarch/users/$(whoami)"
+    sudo mkdir -p "$VERSION_DIR"
+    echo "$VERSION" | sudo tee "$VERSION_DIR/version" > /dev/null
+    sudo chmod 444 "$VERSION_DIR/version"
+    echo "Version set to $VERSION"
+
+    read -r -p "Do you want to reboot? [y/N]: " _reboot_answer
+    if [[ "$_reboot_answer" =~ ^[Yy] ]]; then
+        sudo reboot
+    fi
+else
+    echo "Installation failed."
+    exit 1
+fi

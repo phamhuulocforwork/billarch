@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# gpu-detect-profile — unified GPU profile detection for Meowrch
+# gpu-detect-profile — unified GPU profile detection for Billarch
 # Behavior:
 # - Executed: prints profile to stdout.
 # - Sourced: sets/export GPU_SETUP (quiet; no stdout).

@@ -15,7 +15,7 @@ class ConfigBackup:
     @staticmethod
     def _next_backup_path(path: Path) -> Path:
         ts = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        base = path.name + f".meowrch.bak.{ts}"
+        base = path.name + f".billarch.bak.{ts}"
         return path.parent / base
 
     @staticmethod

@@ -94,7 +94,7 @@ class ChaoticAurManager:
     def _add_to_pacman_conf() -> None:
         """Добавляет Chaotic AUR в /etc/pacman.conf"""
         pacman_conf_path = "/etc/pacman.conf"
-        temp_path = "/tmp/meowrch-pacman-chaotic.conf"
+        temp_path = "/tmp/billarch-pacman-chaotic.conf"
         
         chaotic_section = """
 # Chaotic AUR - Binary AUR packages

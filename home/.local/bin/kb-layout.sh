@@ -43,8 +43,7 @@ get_lang() {
             "Chinese (Simplified)": "ZH-CN",
             "Chinese (Traditional)": "ZH-TW",
             "Japanese": "JA",
-            "Korean": "KO",
-            "Vietnamese": "VI"
+            "Korean": "KO"
         }[.]'
     elif [ "$SESSION_TYPE" == "x11" ]; then
         xkb-switch -p

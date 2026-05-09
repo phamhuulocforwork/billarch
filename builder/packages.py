@@ -20,9 +20,11 @@ BASE = Packages(
 			##==> CLI-Tools
 			###########################################
             "jq", "fastfetch", "lsd", "bat", "micro", "sudo",
-            "btop", "starship", "openssh", "sshfs", 
+            "btop", "yazi", "starship", "openssh", "sshfs", 
             "wget", "tmux", "ffmpeg", "cliphist",
-            "tree", "bash-completion",
+            "tree", "bash-completion", "zsh", "zsh-syntax-highlighting", 
+            "zsh-autosuggestions", "zsh-history-substring-search",
+            "fish",
 
 			##==> GUI 
 			###########################################
@@ -46,7 +48,7 @@ BASE = Packages(
             "dunst", "xorg-xsetroot", "picom"
 		],
 		hyprland_packages=[
-			"hyprland", "waybar", "hyprlock", "swww", "wl-clipboard", 
+			"hyprland", "waybar", "hyprlock", "awww", "wl-clipboard", 
             "xdg-desktop-portal-hyprland", "qt5-wayland", "qt6-wayland",
 			"xdg-desktop-portal-wlr", "hypridle", "hyprpicker", "wlr-randr",
             "uwsm", "libnewt", "swaync", "wl-clip-persist"
@@ -56,17 +58,17 @@ BASE = Packages(
 		common=[
             ##==> System
             ###########################################
-            "meowrch-settings", "meowrch-tools", "update-grub",
+            "billarch-settings", "billarch-tools", "update-grub",
 
 			##==> GUI
             ###########################################
             "visual-studio-code-bin", "nemo-tags", "hotkeyhub-bin", "fcitx5-bamboo",
-            "microsoft-edge-stable",
+            "google-chrome",
             
             ##==> Customization: Themes, icons and cursors
             ###########################################
             "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula",
-            "pawlette",
+            "pawlette-legacy",
             
             ##==> CLI-Tools
             ###########################################
@@ -78,7 +80,7 @@ BASE = Packages(
 		],
 		bspwm_packages=["xkb-switch", "i3lock-color"],
 		hyprland_packages=[
-			"hyprprop", "grimblast-git", "billpanel"
+			"hyprprop", "grimblast-git", "billpanel", "rofi-calc"
 		]
 	)
 )

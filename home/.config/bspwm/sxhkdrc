@@ -11,7 +11,7 @@ super + shift + c
 
 # Description: Open browser
 super + shift + f
-	microsoft-edge-stable
+	google-chrome-stable
 
 # Description: Open Telegram
 super + shift + t
