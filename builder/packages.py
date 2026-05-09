@@ -2,53 +2,55 @@ from utils.schemes import DistributionPackages, PackageInfo, Packages
 
 BASE = Packages(
 	pacman=DistributionPackages(
-		common=[  
+		common=[
 			##==> Base tools and daemons
 			###########################################
-			"base-devel", "git", "networkmanager", "libnotify", "bluez", 
-            "bluez-utils", "playerctl", "upower", "brightnessctl", 
+			"base-devel", "git", "networkmanager", "libnotify", "bluez",
+            "bluez-utils", "playerctl", "upower", "brightnessctl",
 			"udiskie", "xdg-desktop-portal-gtk", "xdg-desktop-portal",
             "mkinitcpio", "xorg-server-xvfb", "gobject-introspection",
-            "power-profiles-daemon", "gvfs-mtp", "android-udev",
+            "power-profiles-daemon", "gvfs-mtp", "android-udev", "dart-sass",
+            "tesseract", "tesseract-data-eng", "tesseract-data-vie",
+            "gnome-bluetooth-3.0", "openvpn",
 
 			##==> Audio
             ###########################################
-            "pipewire-jack", "pipewire-alsa", "wireplumber", 
-			"python-pyalsa", "pavucontrol", "pamixer", "pipewire", 
+            "pipewire-jack", "pipewire-alsa", "wireplumber",
+			"python-pyalsa", "pavucontrol", "pamixer", "pipewire",
 			"pipewire-pulse", "pipewire-audio", "sof-firmware",
-            
+
 			##==> CLI-Tools
 			###########################################
             "jq", "fastfetch", "lsd", "bat", "micro", "sudo",
-            "btop", "yazi", "starship", "openssh", "sshfs", 
+            "btop", "yazi", "starship", "openssh", "sshfs",
             "wget", "tmux", "ffmpeg", "cliphist",
-            "tree", "bash-completion", "zsh", "zsh-syntax-highlighting", 
+            "tree", "bash-completion", "zsh", "zsh-syntax-highlighting",
             "zsh-autosuggestions", "zsh-history-substring-search",
-            "fish",
+            "fish", "flatpak",
 
-			##==> GUI 
+			##==> GUI
 			###########################################
-			"sddm", "plymouth", "kitty", "blueman", "file-roller", "nemo", 
-            "nemo-fileroller", "gvfs", "ffmpegthumbnailer", "imagemagick", 
-            "vlc", "loupe", "qt5ct", "qt6ct", "qt5-graphicaleffects", 
-            "qt5-svg", "qt5-multimedia", "qt5-quickcontrols2", "gst-plugins-good", 
+			"sddm", "plymouth", "kitty", "blueman", "file-roller", "nemo",
+            "nemo-fileroller", "gvfs", "ffmpegthumbnailer", "imagemagick",
+            "vlc", "loupe", "qt5ct", "qt6ct", "qt5-graphicaleffects",
+            "qt5-svg", "qt5-multimedia", "qt5-quickcontrols2", "gst-plugins-good",
             "redshift", "zenity", "polkit-gnome", "gnome-disk-utility","rofimoji",
             "flameshot", "rofi", "qalculate-gtk", "fcitx5", "fcitx5-configtool", "fcitx5-gtk", "fcitx5-qt",
-            
+
 			##==> Fonts
             ###########################################
-            "ttf-hack-nerd", "noto-fonts", "noto-fonts-cjk", 
-			"noto-fonts-emoji", "noto-fonts-extra", "ttf-iosevka-nerd", 
+            "ttf-hack-nerd", "noto-fonts", "noto-fonts-cjk",
+			"noto-fonts-emoji", "noto-fonts-extra", "ttf-iosevka-nerd",
 			"ttf-jetbrains-mono", "ttf-jetbrains-mono-nerd", "ttf-firacode-nerd",
 			"ttf-fira-code",
 		],
 		bspwm_packages=[
-			"xorg-server", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh", 
+			"xorg-server", "bspwm", "sxhkd", "xorg-xinit", "xclip", "feh",
 			"wmname", "polybar", "xorg-xrandr", "xsettingsd", "clipnotify",
             "dunst", "xorg-xsetroot", "picom"
 		],
 		hyprland_packages=[
-			"hyprland", "waybar", "hyprlock", "awww", "wl-clipboard", 
+			"hyprland", "waybar", "hyprlock", "awww", "wl-clipboard",
             "xdg-desktop-portal-hyprland", "qt5-wayland", "qt6-wayland",
 			"xdg-desktop-portal-wlr", "hypridle", "hyprpicker", "wlr-randr",
             "uwsm", "libnewt", "swaync", "wl-clip-persist"
@@ -58,22 +60,22 @@ BASE = Packages(
 		common=[
             ##==> System
             ###########################################
-            "billarch-settings", "billarch-tools", "update-grub",
+            "billarch-settings", "billarch-tools", "update-grub", "nvm",
 
 			##==> GUI
             ###########################################
             "visual-studio-code-bin", "nemo-tags", "hotkeyhub-bin", "fcitx5-bamboo",
             "google-chrome",
-            
+
             ##==> Customization: Themes, icons and cursors
             ###########################################
             "bibata-cursor-theme-bin", "tela-circle-icon-theme-dracula",
             "pawlette-legacy",
-            
+
             ##==> CLI-Tools
             ###########################################
-            "cava", "pokemon-colorscripts",
-            
+            "cava", "fabric-cli-git",
+
             ##==> Fonts
             ###########################################
             "ttf-meslo-nerd-font-powerlevel10k",
@@ -88,12 +90,17 @@ BASE = Packages(
 
 CUSTOM = {
     "useful": {
-        "timeshift": PackageInfo("A system restore utility for Linux", recommended=True)
+        "timeshift": PackageInfo("A system restore utility for Linux", recommended=True),
+        "keepassxc": PackageInfo("Cross-platform community-driven port of Keepass password manager", recommended=True)
 	},
     "development": {
-        "obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files", recommended=True),
-        "postgresql": PackageInfo("Sophisticated object-relational DBMS", recommended=True),
-        "pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True, recommended=True),
+        "zed": PackageInfo("Zed is a minimal code editor crafted for speed and collaboration with humans and AI.", recommended=True),
+        "obsidian": PackageInfo("A powerful knowledge base that works on top of a local folder of plain text Markdown files"),
+        "postgresql": PackageInfo("Sophisticated object-relational DBMS"),
+        "pgadmin4-desktop": PackageInfo("The desktop user interface for pgAdmin", aur=True),
+        "docker": PackageInfo("A tool for running containers"),
+        "docker-compose": PackageInfo("Define and run multi-container Docker applications"),
+        "navicat": PackageInfo("All-in-one solution for database development that enables seamless connections to multiple databases", flatpak=True, flatpakref="https://dn.navicat.com/flatpak/flatpakref/navicat17/com.navicat.premium.en.flatpakref"),
         "redis": PackageInfo("An in-memory database that persists on disk")
 	},
     "social_media": {
@@ -102,8 +109,8 @@ CUSTOM = {
 		"vesktop": PackageInfo("Custom Discord client", recommended=True, aur=True)
 	},
 	"games": {
-		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True), 
-		"gamemode": PackageInfo("Game optimization tool", recommended=True, selected=True), 
+		"steam": PackageInfo("The best launcher for games", recommended=True, selected=True),
+		"gamemode": PackageInfo("Game optimization tool", recommended=True, selected=True),
 		"mangohud": PackageInfo("Displays metrics in running games"),
         "portproton": PackageInfo("Launcher for Windows games with good optimization", recommended=True, aur=True)
 	},
@@ -115,5 +122,5 @@ CUSTOM = {
         "libreoffice-fresh": PackageInfo("Comprehensive office suite for word processing, spreadsheets, and presentations"),
         "onlyoffice-bin": PackageInfo("Office suite that allows collaborative editing of documents", aur=True, recommended=True),
 		"evince": PackageInfo("Document viewer", selected=True, recommended=True)
-    }
+    },
 }

@@ -104,6 +104,14 @@ class Builder:
                     allow_grub_config=self.build_options.install_grub
                 )
 
+            if self.build_options.install_shell:
+                if self.build_options.terminal_shell == TerminalShell.FISH:
+                    AppsManager.configure_fish()
+
+            if self._is_custom_selected("docker"):
+                AppsManager.configure_docker()
+                
+
             AppsManager.configure_code()
 
             if self.build_options.install_hyprland:
@@ -122,6 +130,7 @@ class Builder:
             )
             logger.warning("Pacman: " + ", ".join(self.not_installed_packages.pacman))
             logger.warning("Aur: " + ", ".join(self.not_installed_packages.aur))
+            logger.warning("Flatpak: " + ", ".join(self.not_installed_packages.flatpak))
             logger.success(
                 "Billarch has been successfully installed! Restart your PC to apply the changes."
             )
@@ -133,7 +142,7 @@ class Builder:
 
     def packages_installation(self) -> None:
         logger.info("Starting the package installation process")
-        pacman, aur = self._collect_selected_packages()
+        pacman, aur, flatpak = self._collect_selected_packages()
 
         self.not_installed_packages.pacman.extend(
             PackageManager.install_packages(pacman)
@@ -143,11 +152,16 @@ class Builder:
             PackageManager.install_packages(aur, aur=self.build_options.aur_helper)
         )
 
+        for name, flatpakref in flatpak:
+            if not PackageManager.install_flatpak_package(name, flatpakref):
+                self.not_installed_packages.flatpak.append(name)
+
         logger.success("The installation process of all packages is complete!")
 
     def _collect_selected_packages(self):
         pacman: list[str] = []
         aur: list[str] = []
+        flatpak: list[tuple[str, str]] = []
 
         pacman.extend(BASE.pacman.common)
         aur.extend(BASE.aur.common)
@@ -156,7 +170,9 @@ class Builder:
             for package, info in CUSTOM[category].items():
                 if not info.selected:
                     continue
-                if info.aur:
+                if info.flatpak:
+                    flatpak.append((package, info.flatpakref))
+                elif info.aur:
                     aur.append(package)
                 else:
                     pacman.append(package)
@@ -169,7 +185,7 @@ class Builder:
         # Deduplicate while preserving order
         pacman = list(dict.fromkeys(pacman))
         aur = list(dict.fromkeys(aur))
-        return pacman, aur
+        return pacman, aur, flatpak
 
     def daemons_setting(self) -> None:
         logger.info("The daemons are starting to run...")
@@ -246,6 +262,9 @@ class Builder:
         subprocess.run(["sudo", "rm", "-f", str(base_dir / ".installing")], check=False)
 
         logger.warning("Installation markers cleaned up due to failure")
+
+    def _is_custom_selected(self, category: str) -> bool:
+        return any(info.selected for info in CUSTOM.get(category, {}).values())
 
 
 if __name__ == "__main__":

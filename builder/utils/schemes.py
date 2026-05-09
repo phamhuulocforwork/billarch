@@ -31,12 +31,15 @@ class Packages:
 class NotInstalledPackages:
     pacman: List[str] = field(default_factory=list)
     aur: List[str] = field(default_factory=list)
+    flatpak: List[str] = field(default_factory=list)
 
 
 @dataclass
 class PackageInfo:
     description: str
     aur: bool = field(default=False, kw_only=True)
+    flatpak: bool = field(default=False, kw_only=True)
+    flatpakref: str = field(default="", kw_only=True)
     recommended: bool = field(default=False, kw_only=True)
     selected: bool = field(default=False, kw_only=True)
 
@@ -49,6 +52,7 @@ class BuildOptions:
     install_grub: bool
     install_sddm: bool
     install_plymouth: bool
+    install_shell: bool
     aur_helper: AurHelper
     use_chaotic_aur: bool
     terminal_shell: TerminalShell

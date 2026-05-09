@@ -43,8 +43,12 @@ class SDDMConfigurer(AppConfigurer):
         )
 
     def _install_theme(self) -> None:
+        theme_src = Path("./misc/sddm_theme")
+        if not theme_src.exists():
+            logger.warning("SDDM theme source not found, skipping theme installation")
+            return
         subprocess.run(
-            ["sudo", "cp", "-r", "./misc/sddm_theme", self.theme_path], check=True
+            ["sudo", "cp", "-r", str(theme_src), self.theme_path], check=True
         )
 
     def granting_permissions(self) -> None:

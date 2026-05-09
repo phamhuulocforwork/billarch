@@ -157,6 +157,7 @@ class Question:
             install_grub="grub" in answers["install_boot_components"],
             install_plymouth="plymouth" in answers["install_boot_components"],
             install_sddm="sddm" in answers["install_boot_components"],
+            install_shell="fish" in answers["install_shell"],
             aur_helper=aur_helper,
             use_chaotic_aur=answers["use_chaotic_aur"] == "Yes",
             terminal_shell=terminal_shell

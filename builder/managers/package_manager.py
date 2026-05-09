@@ -236,6 +236,23 @@ class PackageManager:
 
     @staticmethod
     def update_pacman_conf(*, enable_multilib: bool = False):
+
+    @staticmethod
+    def install_flatpak_package(package_name: str, flatpakref_url: str) -> bool:
+        error_msg = 'Error while installing flatpak package "{package}": {err}'
+        try:
+            subprocess.run(
+                ["flatpak", "install", "-y", flatpakref_url],
+                check=True,
+            )
+            logger.success(f'Flatpak package "{package_name}" has been successfully installed!')
+            return True
+        except subprocess.CalledProcessError as e:
+            logger.error(error_msg.format(package=package_name, err=e.stderr))
+        except Exception:
+            logger.error(error_msg.format(package=package_name, err=traceback.format_exc()))
+
+        return False
         pacman_config_path = "/etc/pacman.conf"
         temp_pacman_config_path = "/tmp/meowrhc-pacman.conf"
 

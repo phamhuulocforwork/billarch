@@ -1,6 +1,7 @@
 import ast
 import random
 import json
+import shutil
 import subprocess
 import traceback
 
@@ -11,7 +12,27 @@ from .base import AppConfigurer
 
 
 class PawletteConfigurer(AppConfigurer):
+    def _check_pawlette_available(self) -> bool:
+        if not shutil.which("pawlette"):
+            logger.warning("pawlette command not found, skipping theme setup")
+            return False
+        try:
+            subprocess.run(
+                ["pawlette", "--help"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=5,
+            )
+            return True
+        except Exception:
+            logger.warning("pawlette command is broken, skipping theme setup")
+            return False
+
     def setup(self) -> None:
+        if not self._check_pawlette_available():
+            return
+
         installed_themes = []
 
         try:

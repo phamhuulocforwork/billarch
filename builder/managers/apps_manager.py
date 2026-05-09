@@ -1,3 +1,5 @@
+from .custom_apps.docker import DockerConfigurer
+from .custom_apps.fish import FishConfigurer
 from .custom_apps.grub import GrubConfigurer
 from .custom_apps.pawlette import PawletteConfigurer
 from .custom_apps.plymouth import PlymouthConfigurer
@@ -7,6 +9,18 @@ from .custom_apps.billpanel import BillpanelConfigurer
 
 
 class AppsManager:
+    @staticmethod
+    def configure_docker() -> None:
+        DockerConfigurer().setup()
+
+    @staticmethod
+    def configure_fish() -> None:
+        FishConfigurer().setup()
+
+    @staticmethod
+    def configure_shell() -> None:
+        BillpanelConfigurer().setup()
+    
     @staticmethod
     def configure_plymouth(allow_grub_config: bool = True) -> None:
         PlymouthConfigurer(allow_grub_config=allow_grub_config).setup()

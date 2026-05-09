@@ -3,7 +3,7 @@
 	url = https://github.com/phamhuulocforwork/grub-theme
 [submodule "misc/sddm_theme"]
 	path = misc/sddm_theme
-	url = https://github.com/phamhuulocforwork/sddm-theme
+	url = https://github.com/phamhuulocforwork/sddm_theme
 [submodule "misc/plymouth_theme"]
 	path = misc/plymouth_theme
 	url = https://github.com/phamhuulocforwork/plymouth-theme

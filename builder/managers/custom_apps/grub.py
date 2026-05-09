@@ -50,10 +50,14 @@ class GrubConfigurer(AppConfigurer):
         error_msg = "The installation of the grub theme failed: {err}"
 
         try:
-            self._update_grub_config()
-            self._install_theme()
-            self._update_grub()
-            logger.success("The GRUB theme has been successfully installed!")
+            theme_installed = self._install_theme()
+            if theme_installed:
+                self._update_grub_config()
+                self._update_grub()
+                logger.success("The GRUB theme has been successfully installed!")
+            else:
+                self._update_grub()
+                logger.warning("GRUB theme was not installed, skipping theme configuration")
         except subprocess.CalledProcessError as e:
             logger.error(error_msg.format(err=e.stderr))
         except Exception:
@@ -67,23 +71,24 @@ class GrubConfigurer(AppConfigurer):
         # Добавляем параметр как кастомную настройку
         self._add_grub_theme_setting(theme_param)
 
-    def _install_theme(self) -> None:
-        """Install GRUB theme files"""
+    def _install_theme(self) -> bool:
+        """Install GRUB theme files. Returns True if theme was installed."""
         if not self.theme_src.exists():
             logger.warning("GRUB theme source not found, skipping theme installation")
-            return
+            return False
 
         if not Path("/boot/grub").exists():
             logger.warning("Skipping GRUB theme copy: /boot/grub directory does not exist.")
-            return
+            return False
         dest_dir = Path(self.theme_path).parent
         if not dest_dir.exists():
             logger.warning(f"Skipping GRUB theme copy: destination directory {dest_dir} does not exist.")
-            return
+            return False
 
         subprocess.run(
             ["sudo", "cp", "-r", str(self.theme_src), self.theme_path], check=True
         )
+        return True
 
     def _update_grub(self) -> None:
         """Update GRUB configuration"""
